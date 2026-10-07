@@ -61,6 +61,13 @@ include $(RHIDESRC)/common.mak
 
 programs=gpr2mak.exe idegc.exe rhgdb/rhgdb.exe gprexp.exe
 
+# The sub-project archives (*.a) are shared between these programs but the
+# generated build rules are not safe for concurrent writers (notably `ar`),
+# so order the programs; each program's own build stays parallel.
+idegc.exe:: gpr2mak.exe
+rhgdb/rhgdb.exe:: idegc.exe
+gprexp.exe:: rhgdb/rhgdb.exe
+
 all:: libgdb/libgdbrh.h init.version $(programs)
 
 # these are the targets, which cannot build with RHIDE

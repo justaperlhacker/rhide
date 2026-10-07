@@ -36,7 +36,7 @@ RHIDE_OS_:=$(patsubst CYGWIN%,CYGWIN,$(shell uname))
 endif
 endif
 
-INCLUDE_DIRS=$(RHIDESRC)/librhgdb/include ../libgdb
+INCLUDE_DIRS=$(RHIDESRC)/librhgdb/include ../libgdb $(GDB_OBJ)/bfd $(GDB_SRC)/bfd $(GDB_OBJ)/gdb $(GDB_SRC)/gdb $(GDB_SRC)/include
 LIB_DIRS=
 C_DEBUG_FLAGS=-g
 C_OPT_FLAGS=-O2

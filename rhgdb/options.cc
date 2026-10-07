@@ -38,8 +38,8 @@ public:
 };
 
 TEnvironmentDialog::TEnvironmentDialog():
-TDialog(TRect(0, 0, 65, 17), _("Environment options")),
-TWindowInit(TEnvironmentDialog::initFrame)
+TWindowInit(TEnvironmentDialog::initFrame),
+TDialog(TRect(0, 0, 65, 17), _("Environment options"))
 {
   TRect
     r;
@@ -97,7 +97,7 @@ TWindowInit(TEnvironmentDialog::initFrame)
                                                                                 (
                                                                                  ("94x34"),
                                                                                  NULL))))))))))))));
-  tmp = _("~S~creen mode");
+  tmp = (char *)_("~S~creen mode");
   insert(new
          TLabel(TRect(r.a.x, r.a.y - 1, r.a.x + cstrlen(tmp) + 1, r.a.y), tmp,
                 radio));
@@ -122,7 +122,7 @@ TWindowInit(TEnvironmentDialog::initFrame)
     usermode->options &= ~ofSelectable;
 #endif
   sprintf(tabstring, "%d", tabsize);
-  tmp = _("~T~absize");
+  tmp = (char *)_("~T~absize");
   r.a.x = 2 + 20 + 2 + cstrlen(tmp) + 2;
   r.b.x = r.a.x + 5;
   r.a.y = 2;

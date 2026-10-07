@@ -70,19 +70,19 @@ TDialog(bounds, Title), TWindowInit(TBreakListDialog::initFrame)
   memset(tmp, ' ', size);
   tmp[size] = 0;
   temp = tmp + 2;
-  _tmp = _("File");
+  _tmp = (char *)_("File");
   memcpy(temp, _tmp, strlen(_tmp));
   temp += bl->filesize;
   *temp++ = bl->delemiter;
-  _tmp = _("Line/Function");
+  _tmp = (char *)_("Line/Function");
   memcpy(temp, _tmp, strlen(_tmp));
   temp += bl->linesize;
   *temp++ = bl->delemiter;
-  _tmp = _("Condition");
+  _tmp = (char *)_("Condition");
   memcpy(temp, _tmp, strlen(_tmp));
   temp += bl->condsize;
   *temp++ = bl->delemiter;
-  _tmp = _("Count");
+  _tmp = (char *)_("Count");
   memcpy(temp, _tmp, strlen(_tmp));
   insert(new TStaticText(r, tmp));
   r = getExtent();
@@ -232,8 +232,8 @@ TBreakEditDialog::handleEvent(TEvent & event)
 TBreakEditDialog::TBreakEditDialog(const char *Title):
 TDialog(TRect(0, 0, 51, 14), Title), TWindowInit(TBreakEditDialog::initFrame)
 {
-  char *i1 = _("File/L~i~ne");
-  char *i2 = _("Fu~n~ction");
+  char *i1 = (char *)_("File/L~i~ne");
+  char *i2 = (char *)_("Fu~n~ction");
   int l = max(cstrlen(i1), cstrlen(i2));
   TRect r(30, 2, 30 + l + 6, 4);
 
@@ -308,12 +308,12 @@ EditBreak(int number)
   if (number >= 0)
   {
     bp = GetBreakPoint(number);
-    tit = _("Edit Breakpoint");
+    tit = (char *)_("Edit Breakpoint");
   }
   else
   {
     bp = NULL;
-    tit = _("New Breakpoint");
+    tit = (char *)_("New Breakpoint");
   }
   dialog = new TBreakEditDialog(tit);
   if (bp)

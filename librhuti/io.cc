@@ -23,6 +23,14 @@ unique_name(const char *before, char *retval)
   return unique_name((char *)before, retval);
 }
 
+/* returns an opened unique tempfile in $TMPDIR, malloced name in retname.
+   Needed by modern libset (ceditor); mirrors unique_name() above. */
+FILE *unique_name_f(char *&retname, const char *before, char *retval)
+{
+  retname = unique_name((char *)before, retval);
+  return retname ? fopen(retname, "w+") : NULL;
+}
+
 char *
 unique_name(char *before, char *retval)
 {
@@ -48,6 +56,11 @@ unique_name(char *before, char *retval)
   int handle = mkstemp(name);
   close(handle);
   return name;
+}
+
+void
+RunExternalProgram(char *, unsigned, const char *)
+{
 }
 
 char *

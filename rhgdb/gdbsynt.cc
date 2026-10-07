@@ -53,7 +53,7 @@ init_syntax()
 //                              *TCEditor::SHLSOStack,TCEditor::SHLGenList,
                               TCEditor::SHLGenList, TCEditor::SHLCant) != 0)
   {
-    syntax_file = "__syntax__";
+    syntax_file = (char *)"__syntax__";
     FILE *f = fopen(syntax_file, "w+t");
 
     fprintf(f, "\n\

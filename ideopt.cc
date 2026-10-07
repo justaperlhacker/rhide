@@ -494,7 +494,7 @@ TWindowInit(TEnvironmentDialog::initFrame)
 #define S(x,y) if (x) global_options[1] |= (1 << (y))
   SetGetOptions1();
 #undef S
-  tmp = _("O~p~tions");
+  tmp = (char *)_("O~p~tions");
   options_label =
     new TLabel(TRect(r1.a.x, r1.a.y - 1, r1.a.x + cstrlen(tmp) + 1, r1.a.y),
                tmp, cluster[0]);
@@ -525,7 +525,7 @@ TWindowInit(TEnvironmentDialog::initFrame)
            new TSItem(("94x34"),
            NULL))))))))))))));
 /* *INDENT-ON* */
-  tmp = _("~S~creen mode");
+  tmp = (char *)_("~S~creen mode");
   insert(new
          TLabel(TRect(r2.a.x, r2.a.y - 1, r2.a.x + cstrlen(tmp) + 1, r2.a.y),
                 tmp, radio));
@@ -556,7 +556,7 @@ TWindowInit(TEnvironmentDialog::initFrame)
   r2.move(0, 2);
   r2.b.x = r2.a.x + 10;
   closed = new TIntInputLine(r2, 7);
-  tmp = _("Closed ~W~indows");
+  tmp = (char *)_("Closed ~W~indows");
   insert(new
          TLabel(TRect(r2.a.x, r2.a.y - 1, r2.a.x + cstrlen(tmp) + 1, r2.a.y),
                 tmp, closed));
@@ -1165,7 +1165,7 @@ TWindowInit(&TLocalDialog::initFrame)
   insert(new THistory(TRect(r.b.x, r.a.y, r.b.x + 3, r.b.y), cmdline,
                       RHIDE_History_local_defines));
   r.move(0, -1);
-  tmp = _("local ~c~ommandline options");
+  tmp = (char *)_("local ~c~ommandline options");
   r.b.x = r.a.x + cstrlen(tmp) + 1;
   insert(new TLabel(r, tmp, cmdline));
   cmdline->helpCtx = hcLocalCommandline;
@@ -1176,7 +1176,7 @@ TWindowInit(&TLocalDialog::initFrame)
   insert(new THistory(TRect(r.b.x, r.a.y, r.b.x + 3, r.b.y), output_name,
                       RHIDE_History_local_outfile));
   r.move(0, -1);
-  tmp = _("~N~ame of the output file");
+  tmp = (char *)_("~N~ame of the output file");
   r.b.x = r.a.x + cstrlen(tmp) + 1;
   insert(new TLabel(r, tmp, output_name));
   output_name->helpCtx = hcLocalOutputname;
@@ -1199,7 +1199,7 @@ TWindowInit(&TLocalDialog::initFrame)
   rr = r;
   r.a.y--;
   r.b.y = r.a.y + 1;
-  tmp = _("Comp~i~ler type");
+  tmp = (char *)_("Comp~i~ler type");
   r.b.x = r.a.x + cstrlen(tmp) + 1;
   insert(new TLabel(r, tmp, compiler_id));
   compiler_id->helpCtx = hcLocalCompilertype;
@@ -1211,7 +1211,7 @@ TWindowInit(&TLocalDialog::initFrame)
   insert(new THistory(TRect(rr.b.x, rr.a.y, rr.b.x + 3, rr.b.y), compiler,
                       RHIDE_History_local_compiler_prog));
   rr.move(0, -1);
-  tmp = _("Com~p~iler");
+  tmp = (char *)_("Com~p~iler");
   rr.b.x = rr.a.x + cstrlen(tmp) + 1;
   insert(new TLabel(rr, tmp, compiler));
   compiler->helpCtx = hcLocalCompiler;
@@ -1233,7 +1233,7 @@ TWindowInit(&TLocalDialog::initFrame)
 /* *INDENT-ON* */
   rr = r;
   r.move(0, -1);
-  tmp = _("~E~rror checking");
+  tmp = (char *)_("~E~rror checking");
   r.b.x = r.a.x + cstrlen(tmp) + 1;
   r.b.y = r.a.y + 1;
   insert(new TLabel(r, tmp, error_type));
@@ -1246,7 +1246,7 @@ TWindowInit(&TLocalDialog::initFrame)
   insert(new THistory(TRect(r.b.x, r.a.y, r.b.x + 3, r.b.y), error_prog,
                       RHIDE_History_local_error_prog));
   r.move(0, -1);
-  tmp = _("E~r~ror program");
+  tmp = (char *)_("E~r~ror program");
   r.b.x = r.a.x + cstrlen(tmp) + 1;
   insert(new TLabel(r, tmp, error_prog));
   error_prog->helpCtx = hcLocalErrorprogram;
@@ -1262,7 +1262,7 @@ TWindowInit(&TLocalDialog::initFrame)
                                    NULL)));
 /* *INDENT-ON* */
   r.move(0, -1);
-  tmp = _("o~t~her options");
+  tmp = (char *)_("o~t~her options");
   r.b.x = r.a.x + cstrlen(tmp) + 1;
   insert(new TLabel(r, tmp, others));
   others->helpCtx = hcLocalOtheroptions;
@@ -1363,18 +1363,20 @@ GetOptions(TLocalDialog * dialog, TDependency * dep)
   Boolean retval;
   TParamList *pl = new TParamList();
 
-  retval = pl->FromString(dialog->cmdline->data);
+  char databuf[256];
+  dialog->cmdline->getData(databuf);
+  retval = pl->FromString(databuf);
   destroy(pl);
   if (retval == False)
     return False;
-  dep->local_options->FromString(dialog->cmdline->data);
+  dep->local_options->FromString(databuf);
   if (dep->compile_id != COMPILE_PROJECT)
   {
     if (dep->dest_name)
       delete dep->dest_name;
     char *tmp;
 
-    BaseName(dialog->output_name->data, tmp);
+    { char obuf[256]; dialog->output_name->getData(obuf); BaseName(obuf, tmp); }
     InitFName(dep->dest_name, tmp);
     string_free(tmp);
     dep->dest_file_type = get_file_type(FName(dep->dest_name));
@@ -1414,9 +1416,9 @@ GetOptions(TLocalDialog * dialog, TDependency * dep)
       dep->compile_id = COMPILE_UNKNOWN;
   }
   string_free(dep->compiler);
-  string_dup(dep->compiler, dialog->compiler->data);
+  { char cbuf[256]; dialog->compiler->getData(cbuf); string_dup(dep->compiler, cbuf); }
   string_free(dep->error_check);
-  string_dup(dep->error_check, dialog->error_prog->data);
+  { char ebuf[256]; dialog->error_prog->getData(ebuf); string_dup(dep->error_check, ebuf); }
   dialog->error_type->getData(&dep->error_type);
   dialog->others->getData(&dep->flags);
   return True;

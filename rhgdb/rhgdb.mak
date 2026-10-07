@@ -47,7 +47,7 @@ LIB_DIRS=../librhgdb ../libtvgdb ../libtvuti ../librhuti ../libgdb $(TVOBJ)\
 	$(SETOBJ) $(PCRE_OBJ)
 C_DEBUG_FLAGS=-g
 C_OPT_FLAGS=-O2
-C_WARN_FLAGS=-Wall -Werror
+C_WARN_FLAGS=-Wall -Werror -Wno-error=overloaded-virtual
 C_C_LANG_FLAGS=
 C_CXX_LANG_FLAGS=
 C_P_LANG_FLAGS=

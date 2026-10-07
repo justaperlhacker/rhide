@@ -51,7 +51,7 @@ TWatchListBox::update()
   int i, count = list()->getCount();
   TWatchEntry *e;
   int len = 0, maxlen = 0;
-  char *invalid = _("not available");
+  char *invalid = (char *)_("not available");
   char *expr;
 
   for (i = 0; i < count; i++)

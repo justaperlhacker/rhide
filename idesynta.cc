@@ -647,7 +647,7 @@ SyntaxOptions()
                                                      new TSItem(_("~F~uzzy"),
                                                                 NULL))));
   r.move(0, -1);
-  tmp = _("Search ~m~ethode");
+  tmp = (char *)_("Search ~m~ethode");
   r.b.x = r.a.x + cstrlen(tmp) + 1;
   r.b.y = r.a.y + 1;
   d->insert(new TLabel(r, tmp, radio));
@@ -658,7 +658,7 @@ SyntaxOptions()
   r = r1;
   check = new TCheckBoxes(r1, new TSItem(_("~C~ase sensitive"), NULL));
   r1.move(0, -1);
-  tmp = _("Search o~p~tions");
+  tmp = (char *)_("Search o~p~tions");
   r1.b.x = r1.a.x + cstrlen(tmp) + 1;
   d->insert(new TLabel(r1, tmp, check));
   d->insert(check);
@@ -671,7 +671,7 @@ SyntaxOptions()
   inp->setValidator(new TRangeValidator(1, 1000));
   r = r1;
   r1.move(0, -1);
-  tmp = _("Fu~z~zy value");
+  tmp = (char *)_("Fu~z~zy value");
   r1.b.x = r1.a.x + cstrlen(tmp) + 1;
   d->insert(new TLabel(r1, tmp, inp));
   d->insert(inp);

@@ -54,22 +54,22 @@ UserWarning(int number, ...)
       char *sig;
       sig = va_arg(arg, char *);
 
-      msg = merge_message(_("Program has received signal: "), sig);
+      msg = merge_message((char *)_("Program has received signal: "), sig);
       break;
     }
     case WARN_NOCODE:          // probably optimized out
-      msg = _("For this line is no code generated");
+      msg = (char *)_("For this line is no code generated");
       break;
     case WARN_NOPROGRAM:       /*
                                    This can't be happen in RHIDE 
                                  */
     case WARN_NOPROGRAM_FOUND:
-      msg = _("Could not find the program. You must build at first "
+      msg = (char *)_("Could not find the program. You must build at first "
               "the program to use this function, because the symbols "
               "are taken from that file.");
       break;
     case WARN_INVALID_BREAK:
-      msg = _("The selected breakpoint is invalid, probably this file "
+      msg = (char *)_("The selected breakpoint is invalid, probably this file "
               "is not compiled with debugging information "
               "or for this line is no code generated.");
       bp = va_arg(arg, struct BreakPoint *);
@@ -77,11 +77,11 @@ UserWarning(int number, ...)
       msg = IdentifyBreakPoint(bp, msg);
       break;
     case WARN_NOSYMBOLS:
-      msg = _("This program has no usable debugging information. Try "
+      msg = (char *)_("This program has no usable debugging information. Try "
               "to compile it with the -g switch.");
       break;
     case WARN_NOT_ENABLED:     // produced only under Windows 3.1x
-      msg = _("This breakpoint could not enabled, because you are "
+      msg = (char *)_("This breakpoint could not enabled, because you are "
               "running under Windows 3.1x and there the number of "
               "breakpoints is limited to 3");
       bp = va_arg(arg, struct BreakPoint *);
@@ -89,7 +89,7 @@ UserWarning(int number, ...)
       msg = IdentifyBreakPoint(bp, msg);
       break;
     case WARN_NO_BREAK_AVAILABLE:	// produced only under Windows 3.1x
-      msg = _("You have already 3 breakpoints set and under Windows 3.1x "
+      msg = (char *)_("You have already 3 breakpoints set and under Windows 3.1x "
               "the number of breakpoints is limited to 3");
       bp = va_arg(arg, struct BreakPoint *);
 

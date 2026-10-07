@@ -220,6 +220,7 @@ void close_stderr_out(void);
    creates the file to make sure that it is really unique. That means
    the application is responsible for deleting this file */
 char *unique_name(char *before, char *retval = (char *) 0);
+FILE *unique_name_f(char *&retname, const char *before, char *retval = (char *) 0);
 char *unique_name(const char *before, char *retval = (char *) 0);
 
 

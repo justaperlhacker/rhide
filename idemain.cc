@@ -740,7 +740,7 @@ IDE::update()
     D(cmCompile);
   }
 
-  if (dual_display)
+  if (TScreen::dual_display)
   {
     D(cmUserScreen);
   }
@@ -1727,11 +1727,7 @@ IDE::handleEvent(TEvent & event)
 
           TMouse::suspend();
           update_flag = 0;
-#ifdef __linux__
-          RestoreScreen();
-#else
           TScreen::suspend();
-#endif
           do
           {
             idle();
@@ -1750,9 +1746,7 @@ IDE::handleEvent(TEvent & event)
           }
           while (event.what == evNothing);
           clearEvent(event);
-#ifndef __linux__
           TScreen::resume();
-#endif
           update_flag = old_flag;
           TMouse::resume();
           Repaint();
@@ -1933,8 +1927,7 @@ parse_commandline(int argc, char *argv[])
   char *_rhide_opt = expand_rhide_spec("$(RHIDEOPT)");
   char *rhide_opt = NULL;
 
-  TGKey::useBIOS = 0;
-
+  // DOS-only BIOS keyboard mode is gone from modern drivers.
   if (*_rhide_opt)
   {
     rhide_opt = (char *) alloca(strlen(_rhide_opt));
@@ -1977,11 +1970,8 @@ parse_commandline(int argc, char *argv[])
           no_sigint = 1;
           break;
         case 'H':
-#ifdef __linux__
-          extern int install_console_sigs;
-
-          install_console_sigs = 0;
-#endif
+          // Historical: skipped TV's DOS console-signal hooking, which no
+          // longer exists on modern drivers. Kept as a no-op for compatibility.
           break;
         case 'S':
 #ifdef __DJGPP__
@@ -2002,7 +1992,7 @@ parse_commandline(int argc, char *argv[])
 #endif
           break;
         case 'K':
-          TGKey::useBIOS = 1;
+          // DOS-only BIOS keyboard mode; no equivalent on modern drivers.
           break;
         case 'G':
           arg = next_option(rhide_opt, rhide_opt_end, i, argc, argv);
@@ -2015,7 +2005,8 @@ parse_commandline(int argc, char *argv[])
 #endif
           break;
         case 'p':
-          TGKey::translateKeyPad = 0;
+          // DOS-only keypad translation toggle; modern drivers handle
+          // the keypad via terminfo.
           break;
         case 'k':
           arg = next_option(rhide_opt, rhide_opt_end, i, argc, argv);

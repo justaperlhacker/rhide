@@ -113,7 +113,11 @@ AddWatchEntry(char *_buffer)
   d = new TWatchDialog(TRect(10, 2, 70, 10), _("Add to watch list"),
                        _buffer ? _buffer : "", 0);
   if (TProgram::deskTop->execView(d) == cmOK)
-    AddWatch(d->input->data);
+  {
+    char buffer[256];
+    d->input->getData(buffer);
+    AddWatch(buffer);
+  }
   destroy(d);
 }
 

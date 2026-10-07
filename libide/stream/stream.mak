@@ -1,4 +1,4 @@
-# Copyright (C) 1996-2003 Robert H”hne, see COPYING.RH for details 
+# Copyright (C) 1996-2026 Robert H”hne, see COPYING.RH for details 
 # This file is part of RHIDE. 
 # gpr2mak -d -r- -o - stream.gpr
 vpath_src=$(RHIDESRC)/libide/stream
@@ -72,7 +72,7 @@ MAIN_TARGET=
 PROJECT_ITEMS=sdepcoll.cc sdepende.cc sflagcol.cc sflagent.cc sideedit.cc\
 	sidefile.cc soptions.cc sproject.cc
 DEFAULT_MASK=*.[chmps]*
-RHIDE_BIN_DIR=d:/obj/rhide
+RHIDE_BIN_DIR=/home/johnm/Projects/rhide
 PASCAL_TYPE=GPC
 GET_HOME=$(HOME)
 CLEAN_FILES=$(MAIN_TARGET) $(OBJFILES)
@@ -199,7 +199,7 @@ RHIDE_CONFIG_DIRS_$(RHIDE_OS)=/usr/local/share/rhide /usr/share/rhide \
 RHIDE_CONFIG_DIRS_COMMON=$(RHIDE_CONFIG_DIRS_$(RHIDE_OS))\
 	$(RHIDE_BIN_DIR)/../share/rhide
 RHIDE_CONFIG_DIRS_DJGPP=$(DJDIR)/share/rhide
-RHIDE_CONFIG_DIRS_DJGPP=/usr/local/share/rhide /usr/share/rhide \
+RHIDE_CONFIG_DIRS_Linux=/usr/local/share/rhide /usr/share/rhide \
 	/local/share/rhide /share/rhide
 RHIDE_EMPTY=
 RHIDE_FPC=ppc386
@@ -208,13 +208,13 @@ RHIDE_FPC_FLAGS=$(C_FPC_LANG_FLAGS) $(LOCAL_OPT) $(addprefix\
 RHIDE_FPC_LIBDIRS=$(RHIDE_FPC_LIBDIRS_$(RHIDE_OS))
 RHIDE_FPC_LIBDIRS_$(RHIDE_OS)=/usr/local/lib /usr/lib /lib
 RHIDE_FPC_LIBDIRS_DJGPP=$(DJDIR)/lib
-RHIDE_FPC_LIBDIRS_DJGPP=/usr/local/lib /usr/lib /lib
+RHIDE_FPC_LIBDIRS_Linux=/usr/local/lib /usr/lib /lib
 RHIDE_FPC_LINK_FLAGS=$(RHIDE_FPC_LINK_FLAGS_$(RHIDE_OS))
 RHIDE_FPC_LINK_FLAGS_$(RHIDE_OS)=$(RHIDE_LIBDIRS) $(addprefix\
 	-L,$(RHIDE_FPC_LIBDIRS))
 RHIDE_FPC_LINK_FLAGS_DJGPP=-O coff-go32-exe $(RHIDE_LIBDIRS) $(addprefix\
 	-L,$(RHIDE_FPC_LIBDIRS))
-RHIDE_FPC_LINK_FLAGS_DJGPP=$(RHIDE_LIBDIRS) $(addprefix\
+RHIDE_FPC_LINK_FLAGS_Linux=$(RHIDE_LIBDIRS) $(addprefix\
 	-L,$(RHIDE_FPC_LIBDIRS))
 RHIDE_FSDB=fsdb $(OUTFILE) $(addprefix -p ,$(SRC_DIRS)) $(PROG_ARGS)
 RHIDE_G77=g77
@@ -225,7 +225,8 @@ RHIDE_GPC=gpc
 RHIDE_GPC_FLAGS=$(RHIDE_INCLUDES) $(C_DEBUG_FLAGS) $(C_OPT_FLAGS)\
 	$(C_WARN_FLAGS)  $(C_P_LANG_FLAGS) $(C_EXTRA_FLAGS)
 RHIDE_GPROF=gprof $(OUTFILE)
-RHIDE_GREP=grep -n $(prompt arguments for GREP,$(WUC) $(DEFAULT_GREP_MASK))
+RHIDE_GREP=grep -n $(prompt "(arguments for GREP)",$(WUC)\
+	$(DEFAULT_GREP_MASK))
 RHIDE_GXX=$(RHIDE_GCC)
 RHIDE_INCLUDES=$(SPECIAL_CFLAGS) $(addprefix -I,$(INCLUDE_DIRS))
 RHIDE_LD=$(RHIDE_GCC)
@@ -241,20 +242,20 @@ RHIDE_NASM_TARGET_Linux=elf
 RHIDE_PATH_SEPARATOR=$(RHIDE_PATH_SEPARATOR_$(RHIDE_OS))
 RHIDE_PATH_SEPARATOR_$(RHIDE_OS)=:
 RHIDE_PATH_SEPARATOR_DJGPP=;
-RHIDE_PATH_SEPARATOR_DJGPP=:
+RHIDE_PATH_SEPARATOR_Linux=:
 RHIDE_RLOG=$(shell rlog -R $(rlog_arg))
 RHIDE_RM=rm
 RHIDE_SHARED_LDFLAGS=$(RHIDE_SHARED_LDFLAGS_$(RHIDE_OS))
 RHIDE_SHARED_LDFLAGS_$(RHIDE_OS)=
-RHIDE_SHARED_LDFLAGS_DJGPP=
 RHIDE_SHARED_LDFLAGS_Linux=-shared
+RHIDE_SHARED_LDFLAGS_Linux=
 RHIDE_SPACE=$(RHIDE_EMPTY) $(RHIDE_EMPTY)
 RHIDE_STANDARD_INCLUDES=$(RHIDE_STANDARD_INCLUDES_$(RHIDE_OS))
 RHIDE_STANDARD_INCLUDES_$(RHIDE_OS)=$(addprefix /usr/,include include/sys\
 	include/g++ include/g++/std)
 RHIDE_STANDARD_INCLUDES_DJGPP=$(addprefix $(DJDIR)/,include include/sys\
 	lang/cxx lang/cxx/std)
-RHIDE_STANDARD_INCLUDES_DJGPP=$(addprefix /usr/,include include/sys\
+RHIDE_STANDARD_INCLUDES_Linux=$(addprefix /usr/,include include/sys\
 	include/g++ include/g++/std)
 RHIDE_TYPED_LIBS=$(foreach\
 	suff,$(RHIDE_TYPED_LIBS_SUFFIXES),$(RHIDE_TYPED_LIBS$(suff)))
@@ -264,7 +265,6 @@ RHIDE_TYPED_LIBS.adb=gnat
 RHIDE_TYPED_LIBS.cc=$(RHIDE_TYPED_LIBS_$(RHIDE_OS).cc)
 RHIDE_TYPED_LIBS.cpp=$(RHIDE_TYPED_LIBS.cc)
 RHIDE_TYPED_LIBS.cxx=$(RHIDE_TYPED_LIBS.cc)
-RHIDE_TYPED_LIBS.f=g2c m
 RHIDE_TYPED_LIBS.f=g2c m
 RHIDE_TYPED_LIBS.for=$(RHIDE_TYPED_LIBS.f)
 RHIDE_TYPED_LIBS.fpp=$(RHIDE_TYPED_LIBS.f)
@@ -276,12 +276,9 @@ RHIDE_TYPED_LIBS.pas=$(RHIDE_TYPED_LIBS.p)
 RHIDE_TYPED_LIBS.pp=$(RHIDE_TYPED_LIBS_FPC)
 RHIDE_TYPED_LIBS_$(RHIDE_OS).cc=stdc++ m
 RHIDE_TYPED_LIBS_DJGPP.cc=stdcxx m
-RHIDE_TYPED_LIBS_DJGPP.cc=stdcxx m
-RHIDE_TYPED_LIBS_DJGPP.cc=stdcxx m
-RHIDE_TYPED_LIBS_DJGPP.cpp=stdcxx m
-RHIDE_TYPED_LIBS_DJGPP.cxx=stdcxx m
 RHIDE_TYPED_LIBS_FPC=fpc
 RHIDE_TYPED_LIBS_GPC=gpc m
+RHIDE_TYPED_LIBS_Linux.cc=stdc++ m
 RHIDE_TYPED_LIBS_SUFFIXES=$(sort $(foreach item,$(PROJECT_ITEMS),$(suffix\
 	$(item))))
 _RHIDE_COMPILE_LINK_ADA=$(RHIDE_COMPILE_LINK_ADA_BIND);\

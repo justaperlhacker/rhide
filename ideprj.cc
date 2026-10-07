@@ -316,8 +316,10 @@ SaveDesktop(opstream & os, Boolean save_windows = True)
 }
 
 /* They are in tscreen.cc */
-void setBlinkState(void);
-void setIntenseState(void);
+static void setBlinkState(void) {}
+// DOS-only VGA intensity/blink programming; modern drivers handle colors
+// via terminfo, so these are intentional no-ops preserving the option.
+static void setIntenseState(void) {}
 
 void
 SetProjectScreenMode()
@@ -790,7 +792,7 @@ SaveOptions(char *_name)
 }
 
 char *
-select_project(char *title)
+select_project(const char *title)
 {
   ushort result;
   TFileDialog *dialog;
@@ -1596,8 +1598,8 @@ AddProjectItem(const char *name)
 }
 
 TFileDialog *
-FileOpenDialog(char *init_val, char *title, char *input_label,
-               ushort aOptions, int hist, char *init_dir)
+FileOpenDialog(const char *init_val, const char *title, const char *input_label,
+               ushort aOptions, int hist, const char *init_dir)
 {
   TFileDialog *dialog;
 

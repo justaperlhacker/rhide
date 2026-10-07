@@ -9,7 +9,7 @@ class TInputLine;
 class TInspectDialog:public TDialog
 {
 public:
-  TInspectDialog(const TRect & bounds, char *Title, char *StartVal = NULL);
+  TInspectDialog(const TRect & bounds, const char *Title, const char *StartVal = NULL);
   virtual void handleEvent(TEvent &);
   TInputLine *input;
 };

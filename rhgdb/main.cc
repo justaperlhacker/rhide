@@ -168,9 +168,9 @@ TPalette & RHGDBApp::getPalette() const
 }
 
 RHGDBApp::RHGDBApp():
-TApplication(),
 TProgInit(RHGDBApp::initStatusLine,
-          RHGDBApp::initMenuBar, RHGDBApp::initDeskTop)
+          RHGDBApp::initMenuBar, RHGDBApp::initDeskTop),
+TApplication()
 {
 }
 
@@ -589,11 +589,7 @@ RHGDBApp::handleEvent(TEvent & event)
         case cmUserScreen:
         {
           TMouse::suspend();
-#if 0
           TScreen::suspend();
-#else
-          RestoreScreen();
-#endif
           do
           {
             clearEvent(event);
@@ -610,9 +606,7 @@ RHGDBApp::handleEvent(TEvent & event)
 #endif
           }
           while (event.what == evNothing);
-#if 0
           TScreen::resume();
-#endif
           TMouse::resume();
           repaint();
           clearEvent(event);
@@ -790,12 +784,12 @@ parse_commandline(int argc, char *argv[])
           use_dual_display = 1;
           break;
         case 'M':
-          extern int use_mouse_handler;
-
-          use_mouse_handler = 0;
+          // No global mouse-disable switch on modern drivers; suspend
+          // mouse event handling instead.
+          TMouse::suspend();
           break;
         case 'K':
-          TGKey::useBIOS = 1;
+          // DOS-only BIOS keyboard mode; no equivalent on modern drivers.
           break;
         case 'G':
 //          extern int screen_saving;
@@ -932,7 +926,7 @@ init_rhgdb(int __crt0_argc, char **__crt0_argv)
     }
     else
     {
-      locale_dir = "/share/locale";
+      locale_dir = (char *)"/share/locale";
     }
   }
   setlocale(LC_ALL, "");
@@ -1241,11 +1235,11 @@ static void
 StartSession()
 {
   old_mode = TScreen::getCrtMode();
-  if (!dual_display && use_dual_display && dual_display_supported())
+  if (!TScreen::dual_display && use_dual_display && dual_display_supported())
   {
     TMouse::suspend();
     TScreen::suspend();
-    dual_display = 1;
+    TScreen::dual_display = 1;
     TScreen::resume();
     TMouse::resume();
     TProgram::application->setScreenMode(old_mode);
@@ -1257,11 +1251,11 @@ StartSession()
 static void
 EndSession(int exit_code)
 {
-  if (dual_display && use_dual_display)
+  if (TScreen::dual_display && use_dual_display)
   {
     TMouse::suspend();
     TScreen::suspend();
-    dual_display = 0;
+    TScreen::dual_display = 0;
     TScreen::resume();
     TMouse::resume();
     TProgram::application->setScreenMode(old_mode);
@@ -1276,11 +1270,11 @@ EndSession(int exit_code)
 static void
 BreakSession()
 {
-  if (dual_display && use_dual_display)
+  if (TScreen::dual_display && use_dual_display)
   {
     TMouse::suspend();
     TScreen::suspend();
-    dual_display = 0;
+    TScreen::dual_display = 0;
     TScreen::resume();
     TMouse::resume();
     TProgram::application->setScreenMode(old_mode);
@@ -1356,7 +1350,7 @@ read_in_buffer()
 }
 
 static int
-key_index(char *key)
+key_index(const char *key)
 {
   int len = strlen(key);
 
@@ -1579,7 +1573,7 @@ SaveOptions()
   if (TProgram::deskTop->execView(dialog) != cmCancel)
   {
     strcpy(fname, dialog->directory);
-    strcat(fname, dialog->fileName->data);
+    { char tmp[256]; dialog->fileName->getData(tmp); strcat(fname, tmp); }
     SaveOptions(fname);
   }
   destroy(dialog);
@@ -1597,7 +1591,7 @@ LoadOptions()
   if (TProgram::deskTop->execView(dialog) != cmCancel)
   {
     strcpy(fname, dialog->directory);
-    strcat(fname, dialog->fileName->data);
+    { char tmp[256]; dialog->fileName->getData(tmp); strcat(fname, tmp); }
     ReadOptions(fname);
   }
   destroy(dialog);
@@ -1614,7 +1608,7 @@ FileOpen()
   if (TProgram::deskTop->execView(dialog) != cmCancel)
   {
     strcpy(fname, dialog->directory);
-    strcat(fname, dialog->fileName->data);
+    { char tmp[256]; dialog->fileName->getData(tmp); strcat(fname, tmp); }
     OpenViewer(fname, 1, False);
   }
   destroy(dialog);

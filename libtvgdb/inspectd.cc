@@ -22,8 +22,8 @@
 #include <librhgdb.h>
 #include <string.h>
 
-TInspectDialog::TInspectDialog(const TRect & bounds, char *Title,
-                               char *StartVal):
+TInspectDialog::TInspectDialog(const TRect & bounds, const char *Title,
+                               const char *StartVal):
 TDialog(bounds, Title), TWindowInit(TInspectDialog::initFrame)
 {
   TRect r;
@@ -39,7 +39,7 @@ TDialog(bounds, Title), TWindowInit(TInspectDialog::initFrame)
                       tvgdb_History_Inspect_Expression));
   if (StartVal)
   {
-    input->setData(StartVal);
+    input->setData((void *)StartVal);
   }
   insert(input);
   r.move(0, -1);

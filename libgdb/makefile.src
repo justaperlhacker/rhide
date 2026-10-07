@@ -49,7 +49,7 @@ OS_CFLAGS=-DHAVE_CONFIG_H -O2 -DNO_MMALLOC
 # GDB 5.3 sources predate modern compilers: implicit int/function
 # declarations are hard errors since gcc 14 and tentative definitions no
 # longer merge at link time. Downgrade/compat for the gdb subtree only.
-GDB_COMPAT_CFLAGS=-std=gnu17 -Wno-error=implicit-int -Wno-error=implicit-function-declaration -Wno-error=implicit-fallthrough -Wno-error=incompatible-pointer-types -fcommon
+GDB_COMPAT_CFLAGS=-std=gnu17 -Wno-error=implicit-int -Wno-error=implicit-function-declaration -Wno-error=implicit-fallthrough -Wno-error=incompatible-pointer-types -Wno-error=int-conversion -fcommon
 #MMALLOC=../mmalloc/libmmalloc.a
 #MMALLOC_INC=o_gdb/mmalloc s_gdb/mmalloc
 CHECKS=

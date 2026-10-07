@@ -37,8 +37,3 @@ ExpandFileNameToThePointWhereTheProgramWasLoaded(const char *s)
     string_cat(buffer, s);
   return buffer;
 }
-
-void
-RunExternalProgram(char *, unsigned, char *)
-{
-}

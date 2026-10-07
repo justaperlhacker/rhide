@@ -105,7 +105,7 @@ TWatchDialog::handleEvent(TEvent & event)
           input->getData(input_buffer);
           ret = EvaluateWatch(input_buffer, 0);
           if (!ret)
-            ret = _("not available");
+            ret = (char *)_("not available");
           result->setData(ret);
           newval->setData(empty_string);
           input->selectAll(True);
@@ -120,7 +120,7 @@ TWatchDialog::handleEvent(TEvent & event)
           input->getData(input_buffer);
           ret = SetValue(input_buffer, new_buffer);
           if (!ret)
-            ret = _("could not change");
+            ret = (char *)_("could not change");
           result->setData(ret);
           break;
         }

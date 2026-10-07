@@ -1,4 +1,4 @@
-# Copyright (C) 1996-2003 Robert H”hne, see COPYING.RH for details 
+# Copyright (C) 1996-2026 Robert H”hne, see COPYING.RH for details 
 # This file is part of RHIDE. 
 # gpr2mak -d -r- -o - libtvuti.gpr
 vpath_src=$(RHIDESRC)/libtvuti
@@ -82,7 +82,7 @@ PROJECT_ITEMS=bigmessa.cc cmd.cc commands.cc editdirl.cc editpara.cc\
 	tmemstrm.cc tmsgcoll.cc tmsglist.cc tparamli.cc tscollec.cc\
 	twindowl.cc windowli.cc
 DEFAULT_MASK=*.[cgh]*
-RHIDE_BIN_DIR=d:/obj/rhide
+RHIDE_BIN_DIR=/home/johnm/Projects/rhide
 PASCAL_TYPE=GPC
 GET_HOME=$(HOME)
 CLEAN_FILES=$(MAIN_TARGET) $(OBJFILES)
@@ -209,7 +209,7 @@ RHIDE_CONFIG_DIRS_$(RHIDE_OS)=/usr/local/share/rhide /usr/share/rhide \
 RHIDE_CONFIG_DIRS_COMMON=$(RHIDE_CONFIG_DIRS_$(RHIDE_OS))\
 	$(RHIDE_BIN_DIR)/../share/rhide
 RHIDE_CONFIG_DIRS_DJGPP=$(DJDIR)/share/rhide
-RHIDE_CONFIG_DIRS_DJGPP=/usr/local/share/rhide /usr/share/rhide \
+RHIDE_CONFIG_DIRS_Linux=/usr/local/share/rhide /usr/share/rhide \
 	/local/share/rhide /share/rhide
 RHIDE_EMPTY=
 RHIDE_FPC=ppc386
@@ -218,13 +218,13 @@ RHIDE_FPC_FLAGS=$(C_FPC_LANG_FLAGS) $(LOCAL_OPT) $(addprefix\
 RHIDE_FPC_LIBDIRS=$(RHIDE_FPC_LIBDIRS_$(RHIDE_OS))
 RHIDE_FPC_LIBDIRS_$(RHIDE_OS)=/usr/local/lib /usr/lib /lib
 RHIDE_FPC_LIBDIRS_DJGPP=$(DJDIR)/lib
-RHIDE_FPC_LIBDIRS_DJGPP=/usr/local/lib /usr/lib /lib
+RHIDE_FPC_LIBDIRS_Linux=/usr/local/lib /usr/lib /lib
 RHIDE_FPC_LINK_FLAGS=$(RHIDE_FPC_LINK_FLAGS_$(RHIDE_OS))
 RHIDE_FPC_LINK_FLAGS_$(RHIDE_OS)=$(RHIDE_LIBDIRS) $(addprefix\
 	-L,$(RHIDE_FPC_LIBDIRS))
 RHIDE_FPC_LINK_FLAGS_DJGPP=-O coff-go32-exe $(RHIDE_LIBDIRS) $(addprefix\
 	-L,$(RHIDE_FPC_LIBDIRS))
-RHIDE_FPC_LINK_FLAGS_DJGPP=$(RHIDE_LIBDIRS) $(addprefix\
+RHIDE_FPC_LINK_FLAGS_Linux=$(RHIDE_LIBDIRS) $(addprefix\
 	-L,$(RHIDE_FPC_LIBDIRS))
 RHIDE_FSDB=fsdb $(OUTFILE) $(addprefix -p ,$(SRC_DIRS)) $(PROG_ARGS)
 RHIDE_G77=g77
@@ -235,7 +235,8 @@ RHIDE_GPC=gpc
 RHIDE_GPC_FLAGS=$(RHIDE_INCLUDES) $(C_DEBUG_FLAGS) $(C_OPT_FLAGS)\
 	$(C_WARN_FLAGS)  $(C_P_LANG_FLAGS) $(C_EXTRA_FLAGS)
 RHIDE_GPROF=gprof $(OUTFILE)
-RHIDE_GREP=grep -n $(prompt arguments for GREP,$(WUC) $(DEFAULT_GREP_MASK))
+RHIDE_GREP=grep -n $(prompt "(arguments for GREP)",$(WUC)\
+	$(DEFAULT_GREP_MASK))
 RHIDE_GXX=$(RHIDE_GCC)
 RHIDE_INCLUDES=$(SPECIAL_CFLAGS) $(addprefix -I,$(INCLUDE_DIRS))
 RHIDE_LD=$(RHIDE_GCC)
@@ -251,20 +252,20 @@ RHIDE_NASM_TARGET_Linux=elf
 RHIDE_PATH_SEPARATOR=$(RHIDE_PATH_SEPARATOR_$(RHIDE_OS))
 RHIDE_PATH_SEPARATOR_$(RHIDE_OS)=:
 RHIDE_PATH_SEPARATOR_DJGPP=;
-RHIDE_PATH_SEPARATOR_DJGPP=:
+RHIDE_PATH_SEPARATOR_Linux=:
 RHIDE_RLOG=$(shell rlog -R $(rlog_arg))
 RHIDE_RM=rm
 RHIDE_SHARED_LDFLAGS=$(RHIDE_SHARED_LDFLAGS_$(RHIDE_OS))
 RHIDE_SHARED_LDFLAGS_$(RHIDE_OS)=
-RHIDE_SHARED_LDFLAGS_DJGPP=
 RHIDE_SHARED_LDFLAGS_Linux=-shared
+RHIDE_SHARED_LDFLAGS_Linux=
 RHIDE_SPACE=$(RHIDE_EMPTY) $(RHIDE_EMPTY)
 RHIDE_STANDARD_INCLUDES=$(RHIDE_STANDARD_INCLUDES_$(RHIDE_OS))
 RHIDE_STANDARD_INCLUDES_$(RHIDE_OS)=$(addprefix /usr/,include include/sys\
 	include/g++ include/g++/std)
 RHIDE_STANDARD_INCLUDES_DJGPP=$(addprefix $(DJDIR)/,include include/sys\
 	lang/cxx lang/cxx/std)
-RHIDE_STANDARD_INCLUDES_DJGPP=$(addprefix /usr/,include include/sys\
+RHIDE_STANDARD_INCLUDES_Linux=$(addprefix /usr/,include include/sys\
 	include/g++ include/g++/std)
 RHIDE_TYPED_LIBS=$(foreach\
 	suff,$(RHIDE_TYPED_LIBS_SUFFIXES),$(RHIDE_TYPED_LIBS$(suff)))
@@ -274,7 +275,6 @@ RHIDE_TYPED_LIBS.adb=gnat
 RHIDE_TYPED_LIBS.cc=$(RHIDE_TYPED_LIBS_$(RHIDE_OS).cc)
 RHIDE_TYPED_LIBS.cpp=$(RHIDE_TYPED_LIBS.cc)
 RHIDE_TYPED_LIBS.cxx=$(RHIDE_TYPED_LIBS.cc)
-RHIDE_TYPED_LIBS.f=g2c m
 RHIDE_TYPED_LIBS.f=g2c m
 RHIDE_TYPED_LIBS.for=$(RHIDE_TYPED_LIBS.f)
 RHIDE_TYPED_LIBS.fpp=$(RHIDE_TYPED_LIBS.f)
@@ -286,12 +286,9 @@ RHIDE_TYPED_LIBS.pas=$(RHIDE_TYPED_LIBS.p)
 RHIDE_TYPED_LIBS.pp=$(RHIDE_TYPED_LIBS_FPC)
 RHIDE_TYPED_LIBS_$(RHIDE_OS).cc=stdc++ m
 RHIDE_TYPED_LIBS_DJGPP.cc=stdcxx m
-RHIDE_TYPED_LIBS_DJGPP.cc=stdcxx m
-RHIDE_TYPED_LIBS_DJGPP.cc=stdcxx m
-RHIDE_TYPED_LIBS_DJGPP.cpp=stdcxx m
-RHIDE_TYPED_LIBS_DJGPP.cxx=stdcxx m
 RHIDE_TYPED_LIBS_FPC=fpc
 RHIDE_TYPED_LIBS_GPC=gpc m
+RHIDE_TYPED_LIBS_Linux.cc=stdc++ m
 RHIDE_TYPED_LIBS_SUFFIXES=$(sort $(foreach item,$(PROJECT_ITEMS),$(suffix\
 	$(item))))
 _RHIDE_COMPILE_LINK_ADA=$(RHIDE_COMPILE_LINK_ADA_BIND);\
@@ -385,31 +382,33 @@ NO_LINK=
 LINK_FILES=$(filter-out $(NO_LINK),$(DEPS_0))
 libtvuti.a:: $(DEPS_0)
 	$(RHIDE_COMPILE_ARCHIVE)
-DEPS_1=bigmessa.cc libtvuti.h tvutilfu.h
+DEPS_1=bigmessa.cc include/libtvuti.h include/tvutilfu.h
 bigmessa.o:: $(DEPS_1)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_2=cmd.cc libtvuti.h rhutils.h tvutilfu.h
+DEPS_2=cmd.cc include/libtvuti.h rhutils.h include/tvutilfu.h
 cmd.o:: $(DEPS_2)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_3=commands.cc libtvuti.h tvutilco.h tvutilfu.h
+DEPS_3=commands.cc include/libtvuti.h include/tvutilco.h include/tvutilfu.h
 commands.o:: $(DEPS_3)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_4=editdirl.cc libtvuti.h rhutils.h tdirlist.h tvutilfu.h
+DEPS_4=editdirl.cc include/libtvuti.h rhutils.h include/tdirlist.h\
+	include/tvutilfu.h
 editdirl.o:: $(DEPS_4)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_5=editpara.cc libtvuti.h rhutils.h tparamli.h tvutilfu.h
+DEPS_5=editpara.cc include/libtvuti.h rhutils.h include/tparamli.h\
+	include/tvutilfu.h
 editpara.o:: $(DEPS_5)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_6=execdial.cc libtvuti.h tvutilfu.h
+DEPS_6=execdial.cc include/libtvuti.h include/tvutilfu.h
 execdial.o:: $(DEPS_6)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_7=history.cc libtvuti.h tvutilfu.h
+DEPS_7=history.cc include/libtvuti.h include/tvutilfu.h
 history.o:: $(DEPS_7)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_8=ihistory.cc libtvuti.h tvutilfu.h
+DEPS_8=ihistory.cc include/libtvuti.h include/tvutilfu.h
 ihistory.o:: $(DEPS_8)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_9=msgrec.cc libtvuti.h msgrec.h rhutils.h
+DEPS_9=msgrec.cc include/libtvuti.h include/msgrec.h rhutils.h
 msgrec.o:: $(DEPS_9)
 	$(RHIDE_COMPILE.cc.o)
 DEPS_10=
@@ -428,58 +427,64 @@ stream/stream.gpr.force:
 clean::
 	$(MAKE) -C stream/ -f stream.mak $(FLAGS_FOR_SUBPROJECTS) clean
 
-DEPS_12=tcheckdi.cc libtvuti.h tcheckdi.h
+DEPS_12=tcheckdi.cc include/libtvuti.h include/tcheckdi.h
 tcheckdi.o:: $(DEPS_12)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_13=tdirlist.cc libtvuti.h rhutils.h tdirlist.h
+DEPS_13=tdirlist.cc include/libtvuti.h rhutils.h include/tdirlist.h
 tdirlist.o:: $(DEPS_13)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_14=tenterch.cc libtvuti.h tenterch.h tvutilco.h
+DEPS_14=tenterch.cc include/libtvuti.h include/tenterch.h\
+	include/tvutilco.h
 tenterch.o:: $(DEPS_14)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_15=tenterin.cc libtvuti.h tenterin.h
+DEPS_15=tenterin.cc include/libtvuti.h include/tenterin.h
 tenterin.o:: $(DEPS_15)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_16=tenterli.cc libtvuti.h tenterli.h tvutilco.h
+DEPS_16=tenterli.cc include/libtvuti.h include/tenterli.h\
+	include/tvutilco.h
 tenterli.o:: $(DEPS_16)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_17=tenterra.cc libtvuti.h tenterra.h tvutilco.h
+DEPS_17=tenterra.cc include/libtvuti.h include/tenterra.h\
+	include/tvutilco.h
 tenterra.o:: $(DEPS_17)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_18=tintinpu.cc libtvuti.h tenterin.h tintinpu.h
+DEPS_18=tintinpu.cc include/libtvuti.h include/tenterin.h\
+	include/tintinpu.h
 tintinpu.o:: $(DEPS_18)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_19=tlbutton.cc libtvuti.h tlbutton.h
+DEPS_19=tlbutton.cc include/libtvuti.h include/tlbutton.h
 tlbutton.o:: $(DEPS_19)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_20=tmeminfo.cc libtvuti.h tmeminfo.h
+DEPS_20=tmeminfo.cc include/libtvuti.h include/tmeminfo.h
 tmeminfo.o:: $(DEPS_20)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_21=tmemstrm.cc config.h libtvuti.h tmemstrm.h
+DEPS_21=tmemstrm.cc config.h include/libtvuti.h include/tmemstrm.h
 tmemstrm.o:: $(DEPS_21)
 	$(RHIDE_COMPILE.cc.o)
 LOCAL_21=\
 	tmemstrm.cc___-Wno-deprecated
 LOCAL_OPTIONS += $(LOCAL_21)
-DEPS_22=tmsgcoll.cc libtvuti.h msgrec.h tmsgcoll.h
+DEPS_22=tmsgcoll.cc include/libtvuti.h include/msgrec.h include/tmsgcoll.h
 tmsgcoll.o:: $(DEPS_22)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_23=tmsglist.cc libtvuti.h msgrec.h rhutils.h tenterli.h tmsgcoll.h\
-	tmsglist.h tvutilco.h
+DEPS_23=tmsglist.cc include/libtvuti.h include/msgrec.h rhutils.h\
+	include/tenterli.h include/tmsgcoll.h include/tmsglist.h\
+	include/tvutilco.h
 tmsglist.o:: $(DEPS_23)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_24=tparamli.cc libtvuti.h rhutils.h tparamli.h
+DEPS_24=tparamli.cc include/libtvuti.h rhutils.h include/tparamli.h
 tparamli.o:: $(DEPS_24)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_25=tscollec.cc libtvuti.h tscollec.h
+DEPS_25=tscollec.cc include/libtvuti.h include/tscollec.h
 tscollec.o:: $(DEPS_25)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_26=twindowl.cc libtvuti.h rhutils.h tenterli.h tscollec.h tvutilco.h\
-	twindowl.h
+DEPS_26=twindowl.cc include/libtvuti.h rhutils.h include/tenterli.h\
+	include/tscollec.h include/tvutilco.h include/twindowl.h
 twindowl.o:: $(DEPS_26)
 	$(RHIDE_COMPILE.cc.o)
-DEPS_27=windowli.cc libtvuti.h rhutils.h tenterli.h tmemstrm.h tscollec.h\
-	tvutilco.h tvutilfu.h twindowl.h
+DEPS_27=windowli.cc include/libtvuti.h rhutils.h include/tenterli.h\
+	include/tmemstrm.h include/tscollec.h include/tvutilco.h\
+	include/tvutilfu.h include/twindowl.h
 windowli.o:: $(DEPS_27)
 	$(RHIDE_COMPILE.cc.o)
 all:: libtvuti.a
