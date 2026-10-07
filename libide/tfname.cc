@@ -79,7 +79,7 @@ FileNameCollection::Search(const char *name, ccIndex & index)
   FileEntry fe;
 
   fe.name = (char *) name;
-  fe.slash = strrchr(name, '/');
+  fe.slash = (char *)strrchr(name, '/');
   if (!fe.slash)
     fe.slash = fe.name;
   else

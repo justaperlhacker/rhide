@@ -40,7 +40,7 @@ INCLUDE_DIRS=$(RHIDESRC)/libtvuti/include $(TV_INC)
 LIB_DIRS=
 C_DEBUG_FLAGS=
 C_OPT_FLAGS=-O2
-C_WARN_FLAGS=-Wall -Woverloaded-virtual -Werror
+C_WARN_FLAGS=-Wall -Woverloaded-virtual -Werror -Wno-error=cpp
 C_C_LANG_FLAGS=
 C_CXX_LANG_FLAGS=
 C_P_LANG_FLAGS=

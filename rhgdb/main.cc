@@ -892,7 +892,7 @@ init_rhgdb(int __crt0_argc, char **__crt0_argv)
   if (!locale_dir)
   {
     // get the system default localedir
-    char *_locale_dir = BINDTEXTDOMAIN("rhide", NULL);
+    const char *_locale_dir = BINDTEXTDOMAIN("rhide", NULL);
     if (_locale_dir)
       locale_dir = string_dup(_locale_dir);
     else

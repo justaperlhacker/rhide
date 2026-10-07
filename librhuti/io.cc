@@ -18,6 +18,12 @@ static int h_err, h_errbak;
 
 /* returns a malloced unique tempname in $TMPDIR */
 char *
+unique_name(const char *before, char *retval)
+{
+  return unique_name((char *)before, retval);
+}
+
+char *
 unique_name(char *before, char *retval)
 {
   char *name, *tmp = getenv("TMPDIR");

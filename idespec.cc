@@ -402,7 +402,7 @@ static char *default_variables[] = {
  "*.[cfhmnps]*",
 
  "RHIDE_GREP",
- "grep -n $(prompt "__("arguments for GREP")",$(WUC) $(DEFAULT_GREP_MASK))",
+ "grep -n $(prompt \"(arguments for GREP)\",$(WUC) $(DEFAULT_GREP_MASK))",
 
  "RHIDE_GPROF",
  "gprof $(OUTFILE)",

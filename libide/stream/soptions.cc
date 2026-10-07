@@ -6,4 +6,4 @@
 
 __link(RDirList)
 __link(RParamList)
-__link(RFlagCollection) __link(RStringCollection) s(Options)
+__link(RFlagCollection) __link(RStringCollection) DEFINE_STREAMABLE(Options)

@@ -37,6 +37,7 @@
 #define Uses_TFileDialog
 #define Uses_TFileInputLine
 #define Uses_TValidator
+#define Uses_TRangeValidator
 #define Uses_TDirList
 #define Uses_TButton
 #define Uses_TEventQueue
@@ -2445,7 +2446,7 @@ $(strip $(RHIDE_CONFIG_DIRS) $(INFOPATH) /usr/share/info /usr/info \
   {
     string_free(locale_dir);
     // get the system default localedir
-    char *_locale_dir = BINDTEXTDOMAIN("rhide", NULL);
+    const char *_locale_dir = BINDTEXTDOMAIN("rhide", NULL);
     if (_locale_dir)
       locale_dir = string_dup(_locale_dir);
     else

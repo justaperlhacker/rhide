@@ -940,7 +940,8 @@ isStandardHeader(const char *depfile)
 
     if (!*dir)
       continue;
-    char *tok, *res = NULL;
+    char *tok;
+    const char *res = NULL;
 
     /*
        dir may be more than one directory 

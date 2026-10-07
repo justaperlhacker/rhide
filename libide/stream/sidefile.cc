@@ -4,4 +4,4 @@
 #define Uses_TStreamableClass
 #include <libide.h>
 
-__link(RCEditor) s(IDEFileEditor)
+__link(RCEditor) DEFINE_STREAMABLE(IDEFileEditor)

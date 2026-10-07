@@ -33,7 +33,7 @@ get_file_type(const char *_ext)
 {
   if (!_ext)
     return FILE_NOTHING;
-  char *ext = strrchr(_ext, '.');
+  const char *ext = strrchr(_ext, '.');
 
   if (!ext)
   {

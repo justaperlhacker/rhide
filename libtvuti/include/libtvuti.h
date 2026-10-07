@@ -88,7 +88,7 @@
 #define _INC_TVUTILCOMMANDS
 #endif
 
-#define s(TYPE)\
+#define DEFINE_STREAMABLE(TYPE)\
   TStreamableClass R##TYPE( T##TYPE::name, T##TYPE::build, __DELTA(T##TYPE));
 
 #define STREAMIO(CLASS)\

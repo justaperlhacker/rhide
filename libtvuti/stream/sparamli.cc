@@ -4,4 +4,4 @@
 #define Uses_TStreamableClass
 #include <libtvuti.h>
 
-s(ParamList)
+DEFINE_STREAMABLE(ParamList)

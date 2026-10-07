@@ -140,7 +140,7 @@ put_breakline(FILE * f, int start_len, int max_len, const char *s)
 
   while (1)
   {
-    lf = strchr(s, '\n');
+    lf = (char *)strchr(s, '\n');
     if (lf)
       *lf = 0;
     len = strlen(s);

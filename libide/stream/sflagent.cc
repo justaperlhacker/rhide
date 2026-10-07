@@ -4,4 +4,4 @@
 #define Uses_TStreamableClass
 #include <libide.h>
 
-s(FlagEntry)
+DEFINE_STREAMABLE(FlagEntry)

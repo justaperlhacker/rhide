@@ -4,4 +4,4 @@
 #define Uses_TStreamableClass
 #include <libtvuti.h>
 
-s(DirList)
+DEFINE_STREAMABLE(DirList)
