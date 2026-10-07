@@ -7,7 +7,7 @@ AC_CANONICAL_HOST
 AC_CONFIG_SUBDIRS(libtvuti)
 
 case "$host" in
-  i?86-*-linux*) rhide_OS=Linux ;;
+  i?86-*-linux*|x86_64-*-linux*|aarch64-*-linux*|*-*-linux*) rhide_OS=Linux ;;
   i?86-pc-msdosdjgpp) rhide_OS=DJGPP ;;
   *-pc-cygwin) rhide_OS=CYGWIN ;;
   *) AC_MSG_ERROR([$host is not supported (yet). Sorry.]) ;;
@@ -164,7 +164,7 @@ AC_CHECK_LIB(pcre,pcre_version,
 SET_LIBS="$SET_LIBS rhtv"
 
 AC_CHECK_HEADERS(X11/keysym.h,
-[SET_SPECIAL_LDFLAGS="$SET_SPECIAL_LDFLAGS -L/usr/X11/lib" SET_LIBS="$SET_LIBS X11"],
+[SET_SPECIAL_LDFLAGS="$SET_SPECIAL_LDFLAGS -L/usr/X11/lib" SET_LIBS="$SET_LIBS Xmu X11"],
 [])
 
 AC_SUBST(SET_SPECIAL_LDFLAGS)

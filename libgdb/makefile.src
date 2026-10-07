@@ -39,8 +39,17 @@ CHECKS=
 EXCLUDE_REGEX=| sed -e '/main.o/d'
 endif
 
+# The 2002-era gdb build system (libtool 1.4, automake 1.4) is not safe
+# for parallel builds and RHIDE invokes overlapping sub-makes in the gdb
+# tree concurrently, so serialize everything under libgdb.
+.NOTPARALLEL:
+
 ifneq ($(strip $(rhide_OS)),DJGPP)
 OS_CFLAGS=-DHAVE_CONFIG_H -O2 -DNO_MMALLOC
+# GDB 5.3 sources predate modern compilers: implicit int/function
+# declarations are hard errors since gcc 14 and tentative definitions no
+# longer merge at link time. Downgrade/compat for the gdb subtree only.
+GDB_COMPAT_CFLAGS=-std=gnu17 -Wno-error=implicit-int -Wno-error=implicit-function-declaration -Wno-error=implicit-fallthrough -Wno-error=incompatible-pointer-types -fcommon
 #MMALLOC=../mmalloc/libmmalloc.a
 #MMALLOC_INC=o_gdb/mmalloc s_gdb/mmalloc
 CHECKS=
@@ -108,13 +117,17 @@ override CFLAGS+=$(OS_CFLAGS)
 
 gdbsrc=$(shell echo $(GDB_SRC) | sed "s,^\([a-zA-Z]\):,/dev/\1,g")
 
-GDB_CONFIG_$(rhide_OS)=CC=gcc $(GDB_SRC)/configure
+GDB_CONFIG_$(rhide_OS)=CC=gcc CFLAGS='-g -O2 $(GDB_COMPAT_CFLAGS)' $(GDB_SRC)/configure
 GDB_CONFIG_DJGPP=sh $(GDB_SRC)/gdb/config/djgpp/djconfig.sh $(gdbsrc)
 #GDB_CONFIG_CYGWIN=CC=gcc gt_cv_func_gettext_libintl='yes' $(GDB_SRC)/configure --without-included-gettext
 GDB_CONFIG_CYGWIN=CC=gcc $(GDB_SRC)/configure --disable-nls
 
+# NOTE: several top-level double-colon targets depend on the configured
+# gdb tree through separate sub-makes that run concurrently with -j. The
+# cygnus configure is not safe to run twice in the same directory
+# (config.junk races), so serialize it and skip if already configured.
 $(GDB_OBJ)/Makefile:
-	sh -c "cd $(GDB_OBJ) && $(GDB_CONFIG_$(rhide_OS))"
+	mkdir -p $(GDB_OBJ) && flock $(GDB_OBJ)/configure.lock sh -c "cd $(GDB_OBJ) && test -f Makefile || $(GDB_CONFIG_$(rhide_OS))"
 
 $(GDB_OBJ)/bfd/bfd.h: $(GDB_OBJ)/Makefile
 	$(MAKE) -C $(dir $@) $(notdir $@)
@@ -153,13 +166,13 @@ libopcodes.t: $(GDB_OBJ)/opcodes/libopcodes.a
 libreadline.t: $(GDB_OBJ)/readline/libreadline.a
 libmmalloc.t: $(GDB_OBJ)/mmalloc/libmmalloc.a
 
-$(GDB_OBJ)/%.a:
+$(GDB_OBJ)/%.a: $(GDB_OBJ)/Makefile
 #	$(MAKE) -C $(dir $@) $(notdir $@) CFLAGS="$(CFLAGS)" $(LIBGDB_FLAGS)
-	$(MAKE) -C $(dir $@) CFLAGS="$(CFLAGS)" $(LIBGDB_FLAGS)
+	flock $(GDB_OBJ)/build.lock $(MAKE) -C $(dir $@) CFLAGS="$(CFLAGS) $(GDB_COMPAT_CFLAGS)" $(LIBGDB_FLAGS)
 
 libgdb-files: force
 #	$(MAKE) -C $(GDB_OBJ)/gdb CFLAGS="$(CFLAGS)" $(LIBGDB_FLAGS)
-	$(MAKE) -C $(GDB_OBJ) CFLAGS="$(CFLAGS)" $(LIBGDB_FLAGS)
+	flock $(GDB_OBJ)/build.lock $(MAKE) -C $(GDB_OBJ) CFLAGS="$(CFLAGS) $(GDB_COMPAT_CFLAGS)" $(LIBGDB_FLAGS)
 	ls $(GDB_OBJ)/gdb/*.o | sed s,$(GDB_OBJ)/gdb/,,g > $@
 
 T_FILES=libbfd.t libiberty.t libopcodes.t libreadline.t \
@@ -180,8 +193,9 @@ $(GDB_OBJ)/gdb/version.o: $(GDB_OBJ)/Makefile
 	$(MAKE) -C $(dir $@) $(notdir $@)
 	
 echo_ver.exe: $(GDB_OBJ)/gdb/version.o
-	echo 'int main(int argc, char **argv)\
-	  {extern const char version[];printf("%s\n",version);return 0;}' | \
+	{ echo '#include <stdio.h>'; \
+	  echo 'int main(int argc, char **argv)'; \
+	  echo '  {extern const char version[];printf("%s\n",version);return 0;}'; } | \
 	gcc -s -o $@ $< -x c -
 
 gdb_ver.txt: echo_ver.exe

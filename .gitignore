@@ -1,0 +1,27 @@
+# RHIDE revival: build outputs (never commit these)
+*.o
+*.a
+*.so*
+*.exe
+*.t
+gdb_obj/
+nodebobj/
+debobj/
+autom4te.cache/
+config.log
+config.status
+config.env
+config.cache
+configure~
+config.junk
+config.trash
+ideversi.cc
+rhgdb/version.cc
+libgdb/libgdbrh.c
+libgdb/libgdbrh.h
+libgdb/gdb_ver.txt
+libgdb/echo_ver.exe
+libtvuti/config.h
+libtvuti/config.log
+libtvuti/config.status
+__tmp__.mak
