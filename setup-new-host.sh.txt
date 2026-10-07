@@ -1,0 +1,47 @@
+#!/bin/bash
+# RHIDE revival: new-host bootstrap (saved as .txt for easy copying).
+# Clones all four repos and builds tvision -> setedit -> rhide.
+# Tested on CachyOS/Arch with gcc 16. Needs: gcc g++ make perl git,
+#   ncurses dev, gpm dev, X11 dev libs (Xmu!). On Arch:
+#   sudo pacman -S --needed base-devel ncurses gpm libx11 libxmu perl git
+set -e
+P="$HOME/Projects"
+mkdir -p "$P" ~/.local/bin
+cd "$P"
+
+echo "=== 1/4 clone (skip existing dirs) ==="
+[ -d rhide   ] || git clone https://github.com/justaperlhacker/rhide.git
+[ -d tvision ] || git clone https://github.com/set-soft/tvision.git
+[ -d setedit ] || git clone https://github.com/set-soft/setedit.git
+[ -d gdb-5.3 ] || git clone https://github.com/justaperlhacker/gdb-5.3.git
+git -C tvision fetch origin || true
+git -C tvision checkout modern-gcc 2>/dev/null || git -C tvision checkout -b modern-gcc origin/modern-gcc
+git -C gdb-5.3 fetch origin || true
+git -C gdb-5.3 checkout modern-gcc 2>/dev/null || git -C gdb-5.3 checkout -b modern-gcc origin/modern-gcc
+
+echo "=== 2/4 tvision (static only) ==="
+cd "$P/tvision/tvision"
+./configure --without-dynamic
+make -j"$(nproc)"
+ln -sf "$PWD/rhtv-config" ~/.local/bin/rhtv-config
+
+echo "=== 3/4 setedit libset ==="
+cd "$P/setedit/setedit"
+./configure --libset --no-infview \
+  --tv-include="$P/tvision/tvision/include" \
+  --tv-lib="$P/tvision/tvision/makes"
+make needed
+make libset
+
+echo "=== 4/4 rhide ==="
+cd "$P/rhide"
+export TV_INC="$P/tvision/tvision/include" TVOBJ="$P/tvision/tvision/makes" \
+       SETSRC="$P/setedit/setedit" SETOBJ="$P/setedit/setedit/makes" \
+       GDB_SRC="$P/gdb-5.3"
+./configure
+make -j"$(nproc)"
+make rhide
+echo
+echo "OK: $P/rhide/rhide and $P/rhide/rhgdb/rhgdb.exe built."
+echo "Run in terminal with:  env -u DISPLAY $P/rhide/rhide"
+echo "Debug builds want -gdwarf-2 (IDE auto-appends it to C debug flags)."
