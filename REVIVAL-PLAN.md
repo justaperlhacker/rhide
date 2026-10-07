@@ -53,6 +53,12 @@ Build all -> binary is DWARF 2 -> F7 starts a session with no popup;
 inferior observed in ptrace_stop traced by rhide (ps: `hello ... t<
 ptrace_stop`, TracerPid=rhide). Alt+X quits cleanly, no orphans.
 
+## Auto -gdwarf-2 (implemented, NOT yet runtime-verified)
+TF(C_DEBUG_FLAGS) in idespec.cc appends -gdwarf-2 when -g* is active
+without an explicit debug format. Builds clean; the fresh-project
+end-to-end test (new project, defaults, build, readelf check) was
+interrupted mid-flow - rerun it on the new host before calling it done.
+
 ## Known follow-ups (not done)
 - Auto-append `-gdwarf-2` to IDE debug builds vs documenting it (decision).
 - Thread debugging on modern kernels (engine auto-run/flow untested live).
