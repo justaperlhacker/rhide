@@ -9,15 +9,26 @@ P="$HOME/Projects"
 mkdir -p "$P" ~/.local/bin
 cd "$P"
 
-echo "=== 1/4 clone (skip existing dirs) ==="
+echo "=== 1/4 clone (our forks have the revival branches) ==="
 [ -d rhide   ] || git clone https://github.com/justaperlhacker/rhide.git
-[ -d tvision ] || git clone https://github.com/set-soft/tvision.git
+[ -d tvision ] || git clone https://github.com/justaperlhacker/tvision.git
 [ -d setedit ] || git clone https://github.com/set-soft/setedit.git
 [ -d gdb-5.3 ] || git clone https://github.com/justaperlhacker/gdb-5.3.git
-git -C tvision fetch origin || true
-git -C tvision checkout modern-gcc 2>/dev/null || git -C tvision checkout -b modern-gcc origin/modern-gcc
-git -C gdb-5.3 fetch origin || true
-git -C gdb-5.3 checkout modern-gcc 2>/dev/null || git -C gdb-5.3 checkout -b modern-gcc origin/modern-gcc
+# Repair case: dir was cloned from upstream (no modern-gcc there).
+# Point origin at our fork, keep upstream for reference.
+for r in "tvision justaperlhacker/tvision" "gdb-5.3 justaperlhacker/gdb-5.3"; do
+  set -- $r
+  url=$(git -C "$1" remote get-url origin 2>/dev/null || true)
+  case "$url" in
+    *set-soft*)
+      git -C "$1" remote rename origin upstream
+      git -C "$1" remote add origin "https://github.com/$2.git" ;;
+  esac
+done
+git -C tvision fetch origin
+git -C tvision checkout modern-gcc
+git -C gdb-5.3 fetch origin
+git -C gdb-5.3 checkout modern-gcc
 
 echo "=== 2/4 tvision (static only) ==="
 cd "$P/tvision/tvision"
