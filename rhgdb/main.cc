@@ -987,6 +987,15 @@ rhgdb_sig(int signo)
   }
 }
 
+/* Modern compilers record DW_AT_name as an absolute path when the source
+   is given absolute on the command line; never join those onto dirname. */
+static int
+is_absolute_path(const char *f)
+{
+  return f && (f[0] == '/' || (f[0] && f[1] == ':'));
+}
+
+
 int
 main(int argc, char **argv)
 {
@@ -1040,7 +1049,7 @@ main(int argc, char **argv)
     if (main_source)
     {
       bool found = false;
-      if (dirname)
+      if (dirname && !is_absolute_path(main_source))
       {
         char *full_name = string_dup(dirname);
         string_cat(full_name, "/", main_source, NULL);
@@ -1199,9 +1208,8 @@ select_source_line(char *fname, int line, char *dirname, char *fullname)
   if (fullname)
     isSource = OpenViewer(fullname, line, True);
     
-  if (!isSource && dirname)
+  if (!isSource && dirname && fname && !is_absolute_path(fname))
   {
-    if (fname)
     {
       char *full_name = string_dup(dirname);
       string_cat(full_name, "/", fname, NULL);
