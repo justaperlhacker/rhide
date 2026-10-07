@@ -14,6 +14,7 @@
 #define Uses_TDependency
 #define Uses_TDepCollection
 #define Uses_TFlagCollection
+#define Uses_TFlagEntry
 #define Uses_TCEditor_Internal
 #define Uses_TWindowList
 #define Uses_TSCollection
@@ -836,7 +837,34 @@ _flags(TFlagCollection * flags)
 
 TF(C_DEBUG_FLAGS)
 {
-  return _flags(Options.debug_flags);
+  char *retval = _flags(Options.debug_flags);
+  /* The integrated debugger (GDB 5.3 engine) only understands DWARF
+     version 2, but modern compilers default to DWARF 5. If debug info
+     is requested without an explicit debug format, force DWARF 2 so
+     debugging works out of the box. An explicitly selected format
+     (-gdwarf*, -gstabs*, -gcoff, -gxcoff) is always respected. */
+  if (Options.debug_flags)
+  {
+    int i, count = Options.debug_flags->getCount();
+    Boolean want_g = False, have_format = False;
+    for (i = 0; i < count; i++)
+    {
+      TFlagEntry *f = (TFlagEntry *) Options.debug_flags->at(i);
+      const char *s;
+      if (!f || !f->activated)
+        continue;
+      s = f->GetControlString();
+      if (!s || s[0] != '-' || s[1] != 'g')
+        continue;
+      want_g = True;
+      if (!strncmp(s, "-gdwarf", 7) || !strncmp(s, "-gstabs", 7) ||
+          !strncmp(s, "-gcoff", 6) || !strncmp(s, "-gxcoff", 7))
+        have_format = True;
+    }
+    if (want_g && !have_format)
+      string_cat(retval, " -gdwarf-2");
+  }
+  return retval;
 }
 
 TF(C_OPT_FLAGS)
