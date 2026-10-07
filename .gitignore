@@ -25,3 +25,8 @@ libtvuti/config.h
 libtvuti/config.log
 libtvuti/config.status
 __tmp__.mak
+
+# built programs/symlinks
+/rhide
+/rhide.exe
+/idegc.exe
