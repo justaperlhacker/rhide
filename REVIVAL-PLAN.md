@@ -15,14 +15,14 @@ builds too. The debugger is a fork of GDB 5.3 embedded as a library
 - `gdb-5.3` (master=pristine tarball, branch `modern-gcc`): config.if probe,
   bfd bool-enum, obstack macros, proc_service/gregset/thread-db glibc compat,
   strsignal, gdbserver strerror() x3 (all details below).
-- `setedit`, upstream clone, UNMODIFIED (no fork needed).
+- `setedit-upstream`, upstream clone (set-soft/setedit), UNMODIFIED.
 
 ## How to build (from scratch)
 ```
 # deps (order matters)
 cd ~/Projects/tvision/tvision && ./configure --without-dynamic && make -j$(nproc)
 ln -sf $PWD/rhtv-config ~/.local/bin/rhtv-config
-cd ~/Projects/setedit/setedit && ./configure --libset --no-infview \
+cd ~/Projects/setedit-upstream/setedit && ./configure --libset --no-infview \
   --tv-include=$HOME/Projects/tvision/tvision/include \
   --tv-lib=$HOME/Projects/tvision/tvision/makes \
   && make needed && make libset
@@ -30,7 +30,7 @@ cd ~/Projects/setedit/setedit && ./configure --libset --no-infview \
 cd ~/Projects/rhide
 export TV_INC=$HOME/Projects/tvision/tvision/include \
  TVOBJ=$HOME/Projects/tvision/tvision/makes \
- SETSRC=$HOME/Projects/setedit/setedit SETOBJ=$HOME/Projects/setedit/setedit/makes \
+ SETSRC=$HOME/Projects/setedit-upstream/setedit SETOBJ=$HOME/Projects/setedit-upstream/setedit/makes \
  GDB_SRC=$HOME/Projects/gdb-5.3
 ./configure && make -j$(nproc) && make rhide
 ```
