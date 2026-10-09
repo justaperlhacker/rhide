@@ -1,4 +1,4 @@
-# RHIDE color theme: dark
+# RHIDE color theme: everforest
 # <palette-index>=<foreground>,<background>
 1=12,0
 2=7,0
@@ -202,19 +202,19 @@
 200=7,5
 201=7,1
 202=7,8
-color0=#1E1E1E
-color1=#F44747
-color2=#6A9955
-color3=#D7BA7D
-color4=#569CD6
-color5=#C586C0
-color6=#4EC9B0
-color7=#D4D4D4
-color8=#2D2D2D
-color9=#F44747
-color10=#6A9955
-color11=#D7BA7D
-color12=#569CD6
-color13=#C586C0
-color14=#4EC9B0
-color15=#FFFFFF
+color0=#2D353B
+color1=#E67E80
+color2=#A7C080
+color3=#DBBC7F
+color4=#7FBBB3
+color5=#D699B6
+color6=#83C092
+color7=#D3C6AA
+color8=#3D484D
+color9=#E67E80
+color10=#A7C080
+color11=#DBBC7F
+color12=#7FBBB3
+color13=#D699B6
+color14=#83C092
+color15=#D3C6AA

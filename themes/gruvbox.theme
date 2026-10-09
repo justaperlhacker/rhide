@@ -1,4 +1,4 @@
-# RHIDE color theme: dark
+# RHIDE color theme: gruvbox
 # <palette-index>=<foreground>,<background>
 1=12,0
 2=7,0
@@ -202,19 +202,19 @@
 200=7,5
 201=7,1
 202=7,8
-color0=#1E1E1E
-color1=#F44747
-color2=#6A9955
-color3=#D7BA7D
-color4=#569CD6
-color5=#C586C0
-color6=#4EC9B0
-color7=#D4D4D4
-color8=#2D2D2D
-color9=#F44747
-color10=#6A9955
-color11=#D7BA7D
-color12=#569CD6
-color13=#C586C0
-color14=#4EC9B0
-color15=#FFFFFF
+color0=#282828
+color1=#FB4934
+color2=#B8BB26
+color3=#FABD2F
+color4=#83A598
+color5=#83A598
+color6=#8EC07C
+color7=#EBDBB2
+color8=#3C3836
+color9=#FB4934
+color10=#B8BB26
+color11=#FABD2F
+color12=#83A598
+color13=#83A598
+color14=#8EC07C
+color15=#EBDBB2

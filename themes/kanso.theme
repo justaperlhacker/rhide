@@ -1,4 +1,4 @@
-# RHIDE color theme: dark
+# RHIDE color theme: kanso
 # <palette-index>=<foreground>,<background>
 1=12,0
 2=7,0
@@ -202,19 +202,19 @@
 200=7,5
 201=7,1
 202=7,8
-color0=#1E1E1E
-color1=#F44747
-color2=#6A9955
-color3=#D7BA7D
-color4=#569CD6
-color5=#C586C0
-color6=#4EC9B0
-color7=#D4D4D4
-color8=#2D2D2D
-color9=#F44747
-color10=#6A9955
-color11=#D7BA7D
-color12=#569CD6
-color13=#C586C0
-color14=#4EC9B0
-color15=#FFFFFF
+color0=#14171D
+color1=#C4746E
+color2=#8A9A7B
+color3=#C4B28A
+color4=#8BA4B0
+color5=#C4B28A
+color6=#7FB4CA
+color7=#C5C9C7
+color8=#1D2026
+color9=#C4746E
+color10=#8A9A7B
+color11=#C4B28A
+color12=#8BA4B0
+color13=#C4B28A
+color14=#7FB4CA
+color15=#C5C9C7

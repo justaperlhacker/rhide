@@ -178,7 +178,9 @@ static const char *theme_header =
   "# <palette-index>=<foreground>,<background>\n"
   "# colors: 0 Black 1 Blue 2 Green 3 Cyan 4 Red 5 Magenta 6 Brown\n"
   "#         7 Lightgray 8 Darkgray 9 Lightblue 10 Lightgreen\n"
-  "#         11 Lightcyan 12 Lightred 13 Lightmagenta 14 Yellow 15 White\n";
+  "#         11 Lightcyan 12 Lightred 13 Lightmagenta 14 Yellow 15 White\n"
+  "# With monitor\n"
+  "# color<0..15>=#RRGGBB   (RGB of the 16 terminal colors)\n";
 
 static const char *theme_dir_name = "/.rhide/themes";
 
@@ -225,12 +227,31 @@ active_theme_file(void)
 }
 
 static int
+parse_rgb(const char *s, TScreenColor *c)
+{
+  unsigned r = 0, g = 0, b = 0;
+
+  while (*s == ' ' || *s == '\t')
+    s++;
+  if (*s == '#')
+    s++;
+  if (sscanf(s, "%2x%2x%2x", &r, &g, &b) != 3)
+    return 0;
+  c->R = (uchar) r;
+  c->G = (uchar) g;
+  c->B = (uchar) b;
+  c->Alpha = 0;
+  return 1;
+}
+
+static int
 apply_theme_file(const char *path)
 {
   FILE *f;
   unsigned char *base = NULL, *buf;
-  int len = 0, applied = 0;
+  int len = 0, applied = 0, rgb_set = 0;
   char line[512];
+  TScreenColor colors[16];
 
   f = fopen(path, "r");
   if (!f)
@@ -241,6 +262,7 @@ apply_theme_file(const char *path)
     fclose(f);
     return 0;
   }
+  TScreen::getPaletteColors(0, 16, colors);
   buf = new unsigned char[len];
   memcpy(buf, base, len);
   while (fgets(line, sizeof(line), f))
@@ -252,6 +274,13 @@ apply_theme_file(const char *path)
       p++;
     if (*p == '#' || *p == '\n' || *p == '\0')
       continue;
+    if (strncmp(p, "color", 5) == 0 && (eq = strchr(p, '=')) != NULL)
+    {
+      if (sscanf(p + 5, "%d", &idx) == 1 && idx >= 0 && idx < 16
+          && parse_rgb(eq + 1, &colors[idx]))
+        rgb_set++;
+      continue;
+    }
     eq = strchr(p, '=');
     if (!eq)
       continue;
@@ -268,8 +297,13 @@ apply_theme_file(const char *path)
   fclose(f);
   if (applied)
     ApplyThemePalette(buf, len);
+  /* A theme without RGB lines uses the stock 16 colors again. */
+  if (rgb_set)
+    TScreen::setPaletteColors(0, 16, colors);
+  else
+    TScreen::resetPalette();
   delete[] buf;
-  return applied;
+  return applied || rgb_set;
 }
 
 static int
@@ -278,8 +312,10 @@ save_theme_file(const char *path)
   FILE *f;
   unsigned char *buf = NULL;
   int len = 0, i;
+  TScreenColor colors[16];
 
   GetThemePalette(&buf, &len);
+  TScreen::getPaletteColors(0, 16, colors);
   f = fopen(path, "w");
   if (!f)
     return 0;
@@ -290,6 +326,9 @@ save_theme_file(const char *path)
 
     fprintf(f, "%d=%d,%d\n", i, c & 0x0f, (c >> 4) & 0x0f);
   }
+  for (i = 0; i < 16; i++)
+    fprintf(f, "color%d=#%02X%02X%02X\n", i, colors[i].R, colors[i].G,
+            colors[i].B);
   fclose(f);
   return 1;
 }
@@ -358,6 +397,7 @@ apply_dark_theme(void)
     buf[i] = (unsigned char) ((dark_bg(c >> 4) << 4) | dark_fg(c & 0x0f));
   }
   ApplyThemePalette(buf, len);
+  TScreen::resetPalette();
   delete[] buf;
 }
 
@@ -459,7 +499,10 @@ IDEColorTheme(void)
   destroy(d);
 
   if (sel == 0)
+  {
     ResetThemePalette();
+    TScreen::resetPalette();
+  }
   else if (sel == 1)
     apply_dark_theme();
   else if (sel >= 2 && sel - 2 < paths->getCount())

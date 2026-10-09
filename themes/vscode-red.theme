@@ -1,4 +1,4 @@
-# RHIDE color theme: dark
+# RHIDE color theme: vscode-red
 # <palette-index>=<foreground>,<background>
 1=12,0
 2=7,0
@@ -202,19 +202,19 @@
 200=7,5
 201=7,1
 202=7,8
-color0=#1E1E1E
-color1=#F44747
-color2=#6A9955
-color3=#D7BA7D
-color4=#569CD6
-color5=#C586C0
-color6=#4EC9B0
-color7=#D4D4D4
-color8=#2D2D2D
-color9=#F44747
-color10=#6A9955
-color11=#D7BA7D
-color12=#569CD6
-color13=#C586C0
-color14=#4EC9B0
-color15=#FFFFFF
+color0=#390000
+color1=#FF5555
+color2=#CE9178
+color3=#FFD75F
+color4=#82AAFF
+color5=#FF7778
+color6=#56D4DD
+color7=#F8F8F8
+color8=#3F0000
+color9=#FF5555
+color10=#CE9178
+color11=#FFD75F
+color12=#82AAFF
+color13=#FF7778
+color14=#56D4DD
+color15=#F8F8F8

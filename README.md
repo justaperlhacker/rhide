@@ -132,22 +132,39 @@ RHIDE ships built-in themes and can load/save theme files:
 - `Options → Environment → Save theme...` — write the current colors to a file.
 
 A theme is the IDE color palette written as a readable text file, one entry
-per line:
+per line. It can also carry the 16 terminal RGB colors so the whole UI gets
+the theme's real palette (not just the stock EGA colors):
 
 ```
-# RHIDE color theme
+# RHIDE color theme: nord
 # <palette-index>=<foreground>,<background>
 # colors: 0 Black 1 Blue 2 Green 3 Cyan 4 Red 5 Magenta 6 Brown
 #         7 Lightgray 8 Darkgray 9 Lightblue 10 Lightgreen
 #         11 Lightcyan 12 Lightred 13 Lightmagenta 14 Yellow 15 White
-1=1,7
-2=0,7
+# With monitor
+# color<0..15>=#RRGGBB   (RGB of the 16 terminal colors)
+1=12,0
+2=7,0
+...
+color0=#2E3440
+color1=#BF616A
 ...
 ```
 
 The selected theme is remembered in `$(GET_HOME)/.rhide/theme` and restored on
 startup. Edit it by hand or via `Options → Environment → Colors` and save a new
-file. Example themes are in `themes/` (`classic.theme`, `dark.theme`).
+file.
+
+Bundled themes in `themes/` (ported from the [fresh editor](https://github.com/sinelaw/fresh)
+palette set, plus Nord/Batman):
+
+`classic`, `dark`, `light`, `high-contrast`, `nord`, `batman`,
+`black-metal-gorgoroth`, `everforest`, `fleury`, `gruvbox`, `kanso`,
+`kimbie-dark`, `kimbox`, `kraihnight`, `miniwinter`, `monochrome`,
+`nightfly`, `rose-pine`, `tokyo-night`, `vague`, `vscode-red`.
+
+Themes with RGB lines set the X11 hardware palette; themes without them
+(`classic`) use the stock 16 colors.
 
 ## Troubleshooting
 

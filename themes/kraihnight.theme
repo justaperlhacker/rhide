@@ -1,4 +1,4 @@
-# RHIDE color theme: dark
+# RHIDE color theme: kraihnight
 # <palette-index>=<foreground>,<background>
 1=12,0
 2=7,0
@@ -202,19 +202,19 @@
 200=7,5
 201=7,1
 202=7,8
-color0=#1E1E1E
-color1=#F44747
-color2=#6A9955
-color3=#D7BA7D
-color4=#569CD6
-color5=#C586C0
-color6=#4EC9B0
-color7=#D4D4D4
-color8=#2D2D2D
-color9=#F44747
-color10=#6A9955
-color11=#D7BA7D
-color12=#569CD6
-color13=#C586C0
-color14=#4EC9B0
-color15=#FFFFFF
+color0=#1A1A1A
+color1=#B98A8A
+color2=#9FAC7F
+color3=#D6B67F
+color4=#899AB4
+color5=#D6B67F
+color6=#9FAC7F
+color7=#F9F9F9
+color8=#1E1E1E
+color9=#B98A8A
+color10=#9FAC7F
+color11=#D6B67F
+color12=#899AB4
+color13=#D6B67F
+color14=#9FAC7F
+color15=#F9F9F9

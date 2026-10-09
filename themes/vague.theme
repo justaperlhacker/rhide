@@ -1,4 +1,4 @@
-# RHIDE color theme: dark
+# RHIDE color theme: vague
 # <palette-index>=<foreground>,<background>
 1=12,0
 2=7,0
@@ -202,19 +202,19 @@
 200=7,5
 201=7,1
 202=7,8
-color0=#1E1E1E
-color1=#F44747
-color2=#6A9955
-color3=#D7BA7D
-color4=#569CD6
-color5=#C586C0
-color6=#4EC9B0
-color7=#D4D4D4
-color8=#2D2D2D
-color9=#F44747
-color10=#6A9955
-color11=#D7BA7D
-color12=#569CD6
-color13=#C586C0
-color14=#4EC9B0
-color15=#FFFFFF
+color0=#141415
+color1=#D8647E
+color2=#C48282
+color3=#F3BE7C
+color4=#7E98E8
+color5=#B4D4CF
+color6=#7E98E8
+color7=#CDCDCD
+color8=#1C1C24
+color9=#D8647E
+color10=#C48282
+color11=#F3BE7C
+color12=#7E98E8
+color13=#B4D4CF
+color14=#7E98E8
+color15=#CDCDCD

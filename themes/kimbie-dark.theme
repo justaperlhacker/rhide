@@ -1,4 +1,4 @@
-# RHIDE color theme: dark
+# RHIDE color theme: kimbie-dark
 # <palette-index>=<foreground>,<background>
 1=12,0
 2=7,0
@@ -202,19 +202,19 @@
 200=7,5
 201=7,1
 202=7,8
-color0=#1E1E1E
-color1=#F44747
-color2=#6A9955
-color3=#D7BA7D
-color4=#569CD6
-color5=#C586C0
-color6=#4EC9B0
-color7=#D4D4D4
-color8=#2D2D2D
-color9=#F44747
-color10=#6A9955
-color11=#D7BA7D
-color12=#569CD6
-color13=#C586C0
-color14=#4EC9B0
-color15=#FFFFFF
+color0=#221A0F
+color1=#DC3958
+color2=#889B4A
+color3=#F79A32
+color4=#8AB1B0
+color5=#F79A32
+color6=#8AB1B0
+color7=#D3AF86
+color8=#362712
+color9=#DC3958
+color10=#889B4A
+color11=#F79A32
+color12=#8AB1B0
+color13=#F79A32
+color14=#8AB1B0
+color15=#D3AF86
