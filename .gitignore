@@ -26,6 +26,9 @@ libtvuti/config.log
 libtvuti/config.status
 __tmp__.mak
 
+# per-project desktop state written by the IDE on exit
+*.gdt
+
 # built programs/symlinks
 /rhide
 /rhide.exe

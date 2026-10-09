@@ -874,7 +874,16 @@ TF(C_OPT_FLAGS)
 
 TF(C_WARN_FLAGS)
 {
-  return _flags(Options.warn_flags);
+  char *retval = _flags(Options.warn_flags);
+  /* Modern GCC enables -Woverloaded-virtual as part of -Wall, but this
+     old Turbo Vision/setedit code deliberately hides virtuals; with
+     -Werror that becomes fatal. Keep it non-fatal so projects built
+     with -Werror still compile. */
+  if (retval && strstr(retval, "-Werror")
+      && !strstr(retval, "-Wno-error=overloaded-virtual")
+      && !strstr(retval, "-Wno-overloaded-virtual"))
+    string_cat(retval, " -Wno-error=overloaded-virtual");
+  return retval;
 }
 
 TF(C_C_LANG_FLAGS)
