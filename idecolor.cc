@@ -315,10 +315,10 @@ dark_bg(unsigned char c)
     case 15: return 8;    /* White     -> Darkgray */
     case 8:  return 15;
     case 1:  return 0;    /* Blue      -> Black    */
-    case 2:  return 1;    /* Green     -> Blue     */
-    case 3:  return 1;    /* Cyan      -> Blue     */
+    case 2:  return 1;    /* Green     -> Blue (selection) */
+    case 3:  return 8;    /* Cyan      -> Darkgray (lists, scroll bars) */
     case 4:  return 0;    /* Red       -> Black    */
-    case 6:  return 0;    /* Brown     -> Black    */
+    case 6:  return 4;    /* Brown     -> Red      */
     default: return c;
   }
 }
