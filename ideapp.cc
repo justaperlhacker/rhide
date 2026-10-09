@@ -1,4 +1,4 @@
-/* Copyright (C) 1996-2000 Robert H”hne, see COPYING.RH for details */
+/* Copyright (C) 1996-2000 Robert Hï¿½hne, see COPYING.RH for details */
 /* This file is part of RHIDE. */
 #define Uses_TApplication
 #define Uses_TWindow
@@ -24,6 +24,7 @@
 
 #include "ideapp.h"
 
+#include <string.h>
 #include <unistd.h>
 
 #include "pal.h"
@@ -57,22 +58,66 @@ static int cpMonoSize = sizeof(cpIDEMono) - 1;
 
 static int last_palette = -1;
 
+static TPalette *ide_color_pal = NULL;
+static TPalette *ide_bw_pal = NULL;
+static TPalette *ide_mono_pal = NULL;
+
+static void
+init_ide_palettes()
+{
+  if (!ide_color_pal)
+  {
+    ide_color_pal = new TPalette(_cpIDEColor, cpColorSize);
+    ide_bw_pal = new TPalette(_cpIDEBlackWhite, cpBlackWhiteSize);
+    ide_mono_pal = new TPalette(_cpIDEMono, cpMonoSize);
+  }
+}
+
 TPalette & IDE::getPalette() const
 {
-  static TPalette
-  color(_cpIDEColor, cpColorSize);
-  static TPalette
-  bw(_cpIDEBlackWhite, cpBlackWhiteSize);
-  static TPalette
-  mono(_cpIDEMono, cpMonoSize);
+  init_ide_palettes();
 
   if (last_palette != appPalette)
   {
     last_palette = appPalette;
     TCEditor::colorsCached = 0;
   }
-  return appPalette == apBlackWhite ? bw :
-    appPalette == apMonochrome ? mono : color;
+  return appPalette == apBlackWhite ? *ide_bw_pal :
+    appPalette == apMonochrome ? *ide_mono_pal : *ide_color_pal;
+}
+
+/*
+  Color-theme support.  A theme replaces the entries of the IDE color
+  palette (index 1..N, each byte is (background << 4) | foreground).
+  DATA points at the N entries (i.e. palette data + 1) and LEN is N.
+*/
+void
+GetThemePalette(unsigned char **data, int *len)
+{
+  init_ide_palettes();
+  *len = ide_color_pal->data[0];
+  *data = ide_color_pal->data + 1;
+}
+
+void
+ApplyThemePalette(const unsigned char *data, int len)
+{
+  init_ide_palettes();
+  if (!data || len < 1)
+    return;
+  delete[] ide_color_pal->data;
+  ide_color_pal->data = new uchar[len + 1];
+  ide_color_pal->data[0] = (uchar) len;
+  memcpy(ide_color_pal->data + 1, data, len);
+  TCEditor::colorsCached = 0;
+  last_palette = -1;            /* force the bookkeeping in getPalette() */
+  TProgram::appPalette = apColor;
+}
+
+void
+ResetThemePalette()
+{
+  ApplyThemePalette((const unsigned char *) _cpIDEColor, cpColorSize);
 }
 
 void

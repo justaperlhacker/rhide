@@ -1,4 +1,4 @@
-/* Copyright (C) 1996-2000 Robert H”hne, see COPYING.RH for details */
+/* Copyright (C) 1996-2000 Robert Hï¿½hne, see COPYING.RH for details */
 /* This file is part of RHIDE. */
 #include <string.h>
 #define Uses_TRect
@@ -317,6 +317,12 @@ IDE::initMenuBar(TRect r)
 
   TMenuItem & envi = *new TSubMenu(_("~E~nvironment"), kbNoKey, hcEnvironment)
     + *new _TMenuItem(__("~C~olors"), cmColors, kbNoKey, hcColors)
+    + *new _TMenuItem(__("Color ~T~heme..."), cmColorTheme, kbNoKey,
+                      hcColorTheme)
+    + *new _TMenuItem(__("~L~oad theme..."), cmLoadTheme, kbNoKey,
+                      hcLoadTheme)
+    + *new _TMenuItem(__("Sa~v~e theme..."), cmSaveTheme, kbNoKey,
+                      hcSaveTheme)
     + edi_opt
     + *new _TMenuItem(__("~P~references"), cmPreferences, kbNoKey,
                       hcPreferences) + *new _TMenuItem(__("~M~ouse options"),
@@ -390,7 +396,7 @@ IDE::initMenuBar(TRect r)
     *new _TMenuItem(__("~U~serScreen"), cmUserScreen, kbAlF5, hcUserScreen,
                     "Alt+F5");
 
-  TSubMenu & space_menu = *new TSubMenu(_("~ð~"), kbAlSpace)
+  TSubMenu & space_menu = *new TSubMenu(_("~ï¿½~"), kbAlSpace)
     + *new _TMenuItem(__("about RH~I~DE"), cmAbout, kbNoKey, hcAbout)
     + *new _TMenuItem(__("~s~mall bug report"), cmBugReportSmall, kbNoKey,
                       hcBugReportSmall) + *new _TMenuItem(__("~B~ug report"),

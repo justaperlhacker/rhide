@@ -1,4 +1,4 @@
-/* Copyright (C) 1996-2000 Robert H”hne, see COPYING.RH for details */
+/* Copyright (C) 1996-2000 Robert Hï¿½hne, see COPYING.RH for details */
 /* This file is part of RHIDE. */
 #ifndef __IDECONST_H__
 #define __IDECONST_H__
@@ -127,7 +127,10 @@
   __CM(Inspect,117)\
   __CM(AddDataWindow,118)\
   __CM(ShowStackWindow,119)\
-  __CM(QUIT,120)
+  __CM(QUIT,120)\
+  __CM(ColorTheme,121)\
+  __CM(LoadTheme,122)\
+  __CM(SaveTheme,123)
 
 #define __RHIDE_HELP_CODES__\
   __HC(Compile,1)\
@@ -322,7 +325,10 @@
   __HC(SelRectPaste,313)\
   __HC(SelRectCut,314)\
   __HC(SelRectDel,315)\
-  __HC(SelRectMove,316)
+  __HC(SelRectMove,316)\
+  __HC(ColorTheme,317)\
+  __HC(LoadTheme,318)\
+  __HC(SaveTheme,319)
 
 __RHIDE_COMMAND_CODES__ __RHIDE_HELP_CODES__
 #endif

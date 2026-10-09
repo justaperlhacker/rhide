@@ -125,6 +125,33 @@ when `-g` is active and no explicit debug format is selected, so debugging
 works out of the box. An explicit `-gdwarf*`, `-gstabs*`, `-gcoff` or
 `-gxcoff` choice is always respected.
 
+## Color themes
+
+RHIDE ships built-in themes and can load/save theme files:
+
+- `Options → Environment → Color Theme...` — pick `Classic`, `Dark`, or any
+  `*.theme` file from `$(GET_HOME)/.rhide/themes` or `<rhide-src>/themes`.
+- `Options → Environment → Load theme...` — load a theme file from anywhere.
+- `Options → Environment → Save theme...` — write the current colors to a file.
+
+A theme is the IDE color palette written as a readable text file, one entry
+per line:
+
+```
+# RHIDE color theme
+# <palette-index>=<foreground>,<background>
+# colors: 0 Black 1 Blue 2 Green 3 Cyan 4 Red 5 Magenta 6 Brown
+#         7 Lightgray 8 Darkgray 9 Lightblue 10 Lightgreen
+#         11 Lightcyan 12 Lightred 13 Lightmagenta 14 Yellow 15 White
+1=1,7
+2=0,7
+...
+```
+
+The selected theme is remembered in `$(GET_HOME)/.rhide/theme` and restored on
+startup. Edit it by hand or via `Options → Environment → Colors` and save a new
+file. Example themes are in `themes/` (`classic.theme`, `dark.theme`).
+
 ## Troubleshooting
 
 - **`configure: Could not find Turbo Vision header files`** — export `TV_INC`

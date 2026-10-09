@@ -1,4 +1,4 @@
-/* Copyright (C) 1996-2000 Robert H”hne, see COPYING.RH for details */
+/* Copyright (C) 1996-2000 Robert Hï¿½hne, see COPYING.RH for details */
 /* This file is part of RHIDE. */
 #if !defined( __RHIDE_HistoryIDs )
 #define __RHIDE_HistoryIDs
@@ -25,6 +25,6 @@ const int
   RHIDE_History_find = 18,
   RHIDE_History_replace = 19,
   RHIDE_History_Calculator = 20,
-  RHIDE_History_Inspect = 21, RHIDE_History_last = 39;	// reserving the first 40 id's for RHIDE itself
+  RHIDE_History_Inspect = 21, RHIDE_History_theme = 22, RHIDE_History_last = 39;	// reserving the first 40 id's for RHIDE itself
 
 #endif

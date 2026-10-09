@@ -1,4 +1,4 @@
-/* Copyright (C) 1996-2000 Robert H”hne, see COPYING.RH for details */
+/* Copyright (C) 1996-2000 Robert Hï¿½hne, see COPYING.RH for details */
 /* This file is part of RHIDE. */
 #ifndef __IDE_H__
 #define __IDE_H__
@@ -233,6 +233,13 @@ void DefaultAdaFlags();
 
 /* module idecolors.cc */
 void Colors();
+void IDEColorTheme();
+void IDELoadTheme();
+void IDESaveTheme();
+void IDELoadThemeAtStartup();
+void ApplyThemePalette(const unsigned char *data, int len);
+void GetThemePalette(unsigned char **data, int *len);
+void ResetThemePalette();
 
 /* module idehints.cc */
 const char *IDEHint(unsigned short);

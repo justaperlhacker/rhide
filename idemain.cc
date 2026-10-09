@@ -1,4 +1,4 @@
-/* Copyright (C) 1996-2002 Robert H”hne, see COPYING.RH for details */
+/* Copyright (C) 1996-2002 Robert Hï¿½hne, see COPYING.RH for details */
 /* This file is part of RHIDE. */
 #ifdef __DJGPP__
 #include <go32.h>
@@ -904,7 +904,7 @@ About()
 #else
           _("for developing apps"),
 #endif
-          _("Copyright (C) by Robert H”hne"),
+          _("Copyright (C) by Robert Hï¿½hne"),
           1996, 2002,
           _("Language: "), _("English"),
           _("Translated by: "), _("Nobody"),
@@ -1410,6 +1410,9 @@ IDE::handleEvent(TEvent & event)
           SC(GREP);
           SC(Repaint);
           SC(Colors);
+          SC2(ColorTheme, IDEColorTheme);
+          SC2(LoadTheme, IDELoadTheme);
+          SC2(SaveTheme, IDESaveTheme);
           SC(WriteMake);
           SC(Libraries);
           SC(WarningFlags);
@@ -2488,7 +2491,7 @@ $(strip $(RHIDE_CONFIG_DIRS) $(INFOPATH) /usr/share/info /usr/info \
   convert_num_pad = 1;
 #endif
   TScreen::suspend();
-  fprintf(stderr, _("This is %s. Copyright (c) 1996-2002 by Robert H”hne\n"),
+  fprintf(stderr, _("This is %s. Copyright (c) 1996-2002 by Robert Hï¿½hne\n"),
           IDEVersion);
   fprintf(stderr, "             (%s %s)\n", build_date, build_time);
   TScreen::resume();
@@ -2807,6 +2810,7 @@ main(int argc, char **argv)
   TIDEFileEditor::externalFormatLine = DebuggerFormatLine;
 #endif
   App = new IDE();
+  IDELoadThemeAtStartup();
   init_signals();
   if (!PRJNAME)
     find_project();
