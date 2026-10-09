@@ -1,6 +1,6 @@
 #!/bin/bash
 # RHIDE revival: new-host bootstrap (saved as .txt for easy copying).
-# Clones all four repos and builds tvision -> setedit-upstream -> rhide.
+# Clones all four repos and builds tvision -> setedit -> rhide.
 # Tested on CachyOS/Arch with gcc 16. Needs: gcc g++ make perl git,
 #   ncurses dev, gpm dev, X11 dev libs (Xmu!). On Arch:
 #   sudo pacman -S --needed base-devel ncurses gpm libx11 libxmu perl git
@@ -12,7 +12,7 @@ cd "$P"
 echo "=== 1/4 clone (our forks have the revival branches) ==="
 [ -d rhide   ] || git clone https://github.com/justaperlhacker/rhide.git
 [ -d tvision ] || git clone https://github.com/justaperlhacker/tvision.git
-[ -d setedit-upstream ] || git clone https://github.com/set-soft/setedit.git setedit-upstream
+[ -d setedit ] || git clone https://github.com/justaperlhacker/setedit.git
 [ -d gdb-5.3 ] || git clone https://github.com/justaperlhacker/gdb-5.3.git
 # Repair case: dir was cloned from upstream (no modern-gcc there).
 # Point origin at our fork, keep upstream for reference.
@@ -36,8 +36,8 @@ cd "$P/tvision/tvision"
 make -j"$(nproc)"
 ln -sf "$PWD/rhtv-config" ~/.local/bin/rhtv-config
 
-echo "=== 3/4 setedit-upstream libset ==="
-cd "$P/setedit-upstream/setedit"
+echo "=== 3/4 setedit libset ==="
+cd "$P/setedit/setedit"
 ./configure --libset --no-infview \
   --tv-include="$P/tvision/tvision/include" \
   --tv-lib="$P/tvision/tvision/makes"
@@ -47,7 +47,7 @@ make libset
 echo "=== 4/4 rhide ==="
 cd "$P/rhide"
 export TV_INC="$P/tvision/tvision/include" TVOBJ="$P/tvision/tvision/makes" \
-       SETSRC="$P/setedit-upstream/setedit" SETOBJ="$P/setedit-upstream/setedit/makes" \
+       SETSRC="$P/setedit/setedit" SETOBJ="$P/setedit/setedit/makes" \
        GDB_SRC="$P/gdb-5.3"
 ./configure
 make -j"$(nproc)"

@@ -18,20 +18,17 @@ The revival spans four git repos. Clone them as siblings:
 | rhide | `justaperlhacker/rhide` | `master` | the IDE (this repo) |
 | tvision | `justaperlhacker/tvision` | `modern-gcc` | Turbo Vision fork (gcc/glibc fixes) |
 | gdb-5.3 | `justaperlhacker/gdb-5.3` | `modern-gcc` | embedded debugger engine fork |
-| setedit-upstream | `set-soft/setedit` | `master` | SET's editor library (unmodified) |
+| setedit | `justaperlhacker/setedit` | `master` | SET's editor + library (revived fork) |
 
 ```sh
 mkdir -p ~/Projects && cd ~/Projects
 git clone https://github.com/justaperlhacker/rhide.git
 git clone https://github.com/justaperlhacker/tvision.git
 git clone https://github.com/justaperlhacker/gdb-5.3.git
-git clone https://github.com/set-soft/setedit.git setedit-upstream
+git clone https://github.com/justaperlhacker/setedit.git
 git -C tvision  checkout modern-gcc
 git -C gdb-5.3 checkout modern-gcc
 ```
-
-The set-soft mirror is cloned as `setedit-upstream/` so it does not clash with
-the revived `justaperlhacker/setedit` fork, which uses the `setedit/` name.
 
 The build expects this exact sibling layout by default (each project also
 searches `/usr/local/src` and `/usr/src`). Override with the variables below
@@ -63,7 +60,7 @@ ln -sf "$PWD/rhtv-config" ~/.local/bin/rhtv-config
 ### 2. SET's editor library
 
 ```sh
-cd ~/Projects/setedit-upstream/setedit
+cd ~/Projects/setedit/setedit
 ./configure --libset --no-infview \
   --tv-include="$HOME/Projects/tvision/tvision/include" \
   --tv-lib="$HOME/Projects/tvision/tvision/makes"
@@ -79,8 +76,8 @@ make libset
 cd ~/Projects/rhide
 export TV_INC="$HOME/Projects/tvision/tvision/include"
 export TVOBJ="$HOME/Projects/tvision/tvision/makes"
-export SETSRC="$HOME/Projects/setedit-upstream/setedit"
-export SETOBJ="$HOME/Projects/setedit-upstream/setedit/makes"
+export SETSRC="$HOME/Projects/setedit/setedit"
+export SETOBJ="$HOME/Projects/setedit/setedit/makes"
 export GDB_SRC="$HOME/Projects/gdb-5.3"
 
 ./configure
