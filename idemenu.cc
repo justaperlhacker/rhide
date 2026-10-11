@@ -1,4 +1,4 @@
-/* Copyright (C) 1996-2000 Robert Hï¿½hne, see COPYING.RH for details */
+/* Copyright (C) 1996-2000 Robert H”hne, see COPYING.RH for details */
 /* This file is part of RHIDE. */
 #include <string.h>
 #define Uses_TRect
@@ -396,7 +396,7 @@ IDE::initMenuBar(TRect r)
     *new _TMenuItem(__("~U~serScreen"), cmUserScreen, kbAlF5, hcUserScreen,
                     "Alt+F5");
 
-  TSubMenu & space_menu = *new TSubMenu(_("~ï¿½~"), kbAlSpace)
+  TSubMenu & space_menu = *new TSubMenu(_("~ð~"), kbAlSpace)
     + *new _TMenuItem(__("about RH~I~DE"), cmAbout, kbNoKey, hcAbout)
     + *new _TMenuItem(__("~s~mall bug report"), cmBugReportSmall, kbNoKey,
                       hcBugReportSmall) + *new _TMenuItem(__("~B~ug report"),
