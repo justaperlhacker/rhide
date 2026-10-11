@@ -4367,6 +4367,8 @@ fi
 
 
 SET_LIBS="$SET_LIBS rhtv"
+# Turbo Vision may use FreeType for TTF/OTF fonts (X11 driver)
+SET_LIBS="$SET_LIBS freetype"
 
 ac_header= ac_cache=
 for ac_item in $ac_header_c_list

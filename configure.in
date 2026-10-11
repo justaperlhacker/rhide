@@ -163,6 +163,11 @@ AC_CHECK_LIB(pcre,pcre_version,
 
 SET_LIBS="$SET_LIBS rhtv"
 
+dnl Turbo Vision may use FreeType for TTF/OTF fonts (X11 driver)
+AC_CHECK_LIB(freetype,FT_Init_FreeType,
+[SET_LIBS="$SET_LIBS freetype"],
+[])
+
 AC_CHECK_HEADERS(X11/keysym.h,
 [SET_SPECIAL_LDFLAGS="$SET_SPECIAL_LDFLAGS -L/usr/X11/lib" SET_LIBS="$SET_LIBS Xmu X11"],
 [])
